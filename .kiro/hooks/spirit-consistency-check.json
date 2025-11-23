@@ -1,0 +1,13 @@
+{
+  "name": "Spirit Consistency Check",
+  "description": "Verify spirit definitions maintain consistent voice when modified",
+  "trigger": {
+    "type": "onFileSave",
+    "filePattern": "**/spirits/**/*.{js,jsx}"
+  },
+  "action": {
+    "type": "sendMessage",
+    "message": "Review the spirit definition I just modified. Ensure: 1) All prompt templates include {text} placeholder, 2) Voice characteristics are consistent across all prompts, 3) The spirit's personality is distinct from others"
+  },
+  "enabled": true
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Validate on Save",
+  "description": "Check for errors when saving JavaScript/JSX files",
+  "trigger": {
+    "type": "onFileSave",
+    "filePattern": "**/*.{js,jsx}"
+  },
+  "action": {
+    "type": "sendMessage",
+    "message": "Check the file I just saved for any syntax errors or issues using getDiagnostics"
+  },
+  "enabled": true
+}
