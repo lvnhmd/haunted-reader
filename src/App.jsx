@@ -18,7 +18,7 @@ function AppContent() {
   const [activeView, setActiveView] = useState('upload'); // 'upload' | 'spirits' | 'interpretations' | 'timeline'
   
   // Global state
-  const { parsedText } = useParsedText();
+  const { parsedText, setParsedText } = useParsedText();
   const { selectedSpirits, setSelectedSpirits } = useSpirits();
   const { interpretations, loadingSpirits } = useInterpretations();
   const { error, clearError } = useError();
@@ -30,11 +30,15 @@ function AppContent() {
 
   /**
    * Handle text upload from TextUploader
+   * TextUploader already parses the text, we just need to store it in global state
    */
   const handleTextParsed = async (result) => {
-    // State is already updated by useFileUpload
-    // Move to spirit selection view
-    setActiveView('spirits');
+    if (result) {
+      // Store in global state
+      setParsedText(result);
+      // Move to spirit selection view
+      setActiveView('spirits');
+    }
   };
 
   /**
