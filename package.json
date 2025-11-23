@@ -16,6 +16,8 @@
     "@aws-sdk/credential-providers": "^3.709.0",
     "axios": "^1.7.9",
     "epubjs": "^0.3.93",
+    "jspdf": "^3.0.4",
+    "jszip": "^3.10.1",
     "pdfjs-dist": "^4.9.155",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
