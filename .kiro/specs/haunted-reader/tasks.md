@@ -3,20 +3,22 @@
 > 🎃 **Interactive Task List**: Check off tasks as you complete them!
 
 ## Progress Overview
-- [ ] Phase 1: Project Setup & Foundation (3 tasks)
-- [ ] Phase 2: Core Services (4 tasks)
-- [ ] Phase 3: UI Components (4 tasks)
-- [ ] Phase 4: Integration & Polish (4 tasks)
+- [ ] Phase 1: Project Setup & Foundation (3 tasks + 1 checkpoint) - 3/4 complete ✅
+- [ ] Phase 2: Core Services (6 tasks + 1 checkpoint)
+- [ ] Phase 3: UI Components (4 tasks + 1 checkpoint)
+- [ ] Phase 4: Integration & Polish (4 tasks + 1 checkpoint)
 - [ ] Phase 5: Testing & Deployment (3 tasks)
 - [ ] Phase 6: Hackathon Submission (3 tasks)
+
+**Note**: Tasks marked with "*" are optional and can be skipped for faster MVP development. Focus on core functionality first!
 
 ---
 
 ## Phase 1: Project Setup & Foundation
 
 ### ⚡ TASK-1: Initialize Project Structure
-- [ ] **Task Complete**
-- **Status**: 🟡 Ready to start
+- [x] **Task Complete**
+- **Status**: ✅ Complete
 - **Depends on**: none  
 - **Implements**: Project foundation
 
@@ -38,18 +40,18 @@
 7. Configure AWS Bedrock access (see `.kiro/BEDROCK_SETUP.md`)
 
 **Acceptance Criteria**:
-- [ ] `npm run dev` starts development server
-- [ ] Tailwind CSS is working
-- [ ] Folder structure matches design spec
-- [ ] Environment variables can be loaded
-- [ ] AWS SDK dependencies installed correctly
-- [ ] .env.example file created with AWS configuration
+- [x] `npm run dev` starts development server
+- [x] Tailwind CSS is working
+- [x] Folder structure matches design spec
+- [x] Environment variables can be loaded
+- [x] AWS SDK dependencies installed correctly
+- [x] .env.example file created with AWS configuration
 
 ---
 
 ### 👻 TASK-2: Create Spirit Definitions
-- [ ] **Task Complete**
-- **Status**: 🔴 Blocked (needs TASK-1)
+- [x] **Task Complete**
+- **Status**: ✅ Complete
 - **Depends on**: TASK-1  
 - **Implements**: CP-1.1, CP-1.2, CP-1.3, CP-1.4
 
@@ -58,33 +60,47 @@
 **🚀 Start Task**: Ask Kiro: `"Let's implement TASK-2: Create Spirit Definitions"`
 
 **Steps**:
-1. Create `src/spirits/spiritDefinitions.js`
-2. Define spirit data structure
-3. Implement 10 spirits:
-   - Edgar Allan Poe (Gothic horror)
-   - Charles Dickens (Victorian social commentary)
-   - Jane Austen (Romantic wit)
-   - H.P. Lovecraft (Cosmic horror)
-   - Ernest Hemingway (Minimalist)
-   - The Villain (Malicious POV)
-   - A 5-year-old (Innocent lens)
-   - An Old Scholar (Academic)
-   - The Monster (Creature perspective)
-   - Prophet of Doom (Apocalyptic)
-4. Create prompt templates for each spirit (summary, rewrite, ending, analysis)
-5. Add voice profiles with tone, vocabulary, structure, focus
+- [x] 2.1 Create spirit definitions file and data structure
+  - Create `src/spirits/spiritDefinitions.js`
+  - Define spirit data structure with all required fields
+  - _Requirements: CP-1.1, CP-1.2_
+
+- [x] 2.2 Implement all 10 spirits with personalities
+  - Edgar Allan Poe (Gothic horror)
+  - Charles Dickens (Victorian social commentary)
+  - Jane Austen (Romantic wit)
+  - H.P. Lovecraft (Cosmic horror)
+  - Ernest Hemingway (Minimalist)
+  - The Villain (Malicious POV)
+  - A 5-year-old (Innocent lens)
+  - An Old Scholar (Academic)
+  - The Monster (Creature perspective)
+  - Prophet of Doom (Apocalyptic)
+  - _Requirements: CP-1.4_
+
+- [x] 2.3 Create prompt templates for each spirit
+  - Add templates for summary, rewrite, ending, analysis
+  - Ensure all templates include `{text}` placeholder
+  - Add voice profiles with tone, vocabulary, structure, focus
+  - _Requirements: CP-1.2, CP-1.3_
+
+- [ ]* 2.4 Write unit tests for spirit definitions
+  - Test spirit ID uniqueness
+  - Test prompt template placeholder presence
+  - Test voice profile completeness
+  - _Requirements: CP-1.1, CP-1.2, CP-1.3, CP-1.4_
 
 **Acceptance Criteria**:
-- [ ] All spirits have unique IDs
-- [ ] All prompt templates include `{text}` placeholder
-- [ ] Voice characteristics are distinct and consistent
-- [ ] At least 10 spirits defined
+- [x] All spirits have unique IDs
+- [x] All prompt templates include `{text}` placeholder
+- [x] Voice characteristics are distinct and consistent
+- [x] At least 10 spirits defined
 
 ---
 
 ### 🔮 TASK-3: Build Prompt Builder Utility
-- [ ] **Task Complete**
-- **Status**: 🔴 Blocked (needs TASK-2)
+- [x] **Task Complete**
+- **Status**: ✅ Complete
 - **Depends on**: TASK-2  
 - **Implements**: CP-1.2, CP-1.3
 
@@ -93,20 +109,33 @@
 **🚀 Start Task**: Ask Kiro: `"Let's implement TASK-3: Build Prompt Builder Utility"`
 
 **Steps**:
-1. Create `src/spirits/promptBuilder.js`
-2. Implement `buildPrompt(spiritId, promptType, text, options)` function
-3. Handle template variable substitution
-4. Add system prompt construction (Bedrock format with separate `system` field)
-5. Implement prompt validation
-6. Format prompts for Bedrock Claude models (anthropic_version, messages array)
+- [x] 3.1 Create prompt builder with core functionality
+  - Create `src/spirits/promptBuilder.js`
+  - Implement `buildPrompt(spiritId, promptType, text, options)` function
+  - Handle template variable substitution
+  - Implement prompt validation
+  - _Requirements: CP-1.2_
+
+- [x] 3.2 Add Bedrock-specific formatting
+  - Add system prompt construction (Bedrock format with separate `system` field)
+  - Format prompts for Bedrock Claude models (messages array)
+  - Optimize for token efficiency
+  - _Requirements: CP-1.3_
+
+- [x]* 3.3 Write unit tests for prompt builder
+  - Test variable substitution
+  - Test invalid spirit ID handling
+  - Test Bedrock format compliance
+  - Test system prompt generation
+  - _Requirements: CP-1.2, CP-1.3_
 
 **Acceptance Criteria**:
-- [ ] Prompts correctly substitute `{text}` and other variables
-- [ ] System prompts include spirit voice characteristics
-- [ ] Invalid spirit IDs throw descriptive errors
-- [ ] Prompts are optimized for token efficiency
-- [ ] Prompts formatted correctly for Bedrock Claude API (messages array format)
-- [ ] System prompts use separate `system` field (not in messages)
+- [x] Prompts correctly substitute `{text}` and other variables
+- [x] System prompts include spirit voice characteristics
+- [x] Invalid spirit IDs throw descriptive errors
+- [x] Prompts are optimized for token efficiency
+- [x] Prompts formatted correctly for Bedrock Claude API (messages array format)
+- [x] System prompts use separate `system` field (not in messages)
 
 ---
 
@@ -123,15 +152,30 @@
 **🚀 Start Task**: Ask Kiro: `"Let's implement TASK-4: Implement AI Service with Amazon Bedrock"`
 
 **Steps**:
-1. Install AWS SDK: `npm install @aws-sdk/client-bedrock-runtime @aws-sdk/credential-providers`
-2. Create `src/services/aiService.js`
-3. Implement Bedrock provider (`src/services/aiProviders/bedrockProvider.js`)
-4. Configure model mappings (`src/services/aiProviders/bedrockModels.js`)
-5. Set up AWS credentials (Cognito Identity Pool or environment)
-6. Add retry logic with exponential backoff
-7. Implement token estimation
-8. Add streaming support using `invokeModelWithResponseStream`
-9. Handle Bedrock throttling and errors gracefully
+- [ ] 4.1 Set up Bedrock provider and model configuration
+  - Create `src/services/aiService.js`
+  - Implement Bedrock provider (`src/services/aiProviders/bedrockProvider.js`)
+  - Configure model mappings (`src/services/aiProviders/bedrockModels.js`)
+  - Set up AWS credentials (Cognito Identity Pool or environment)
+  - _Requirements: CP-3.3, CP-3.6_
+
+- [ ] 4.2 Implement core generation functionality
+  - Add retry logic with exponential backoff
+  - Implement token estimation
+  - Handle Bedrock throttling and errors gracefully
+  - _Requirements: CP-3.1, CP-3.2, CP-3.4_
+
+- [ ] 4.3 Add streaming support
+  - Add streaming support using `invokeModelWithResponseStream`
+  - Ensure chunks emit progressively
+  - _Requirements: CP-3.5_
+
+- [ ]* 4.4 Write unit tests for AI service
+  - Test retry logic
+  - Test token estimation accuracy
+  - Test error handling
+  - Test credential validation
+  - _Requirements: CP-3.1, CP-3.2, CP-3.3, CP-3.4_
 
 **Acceptance Criteria**:
 - [ ] AWS credentials configured via Cognito or IAM (no hardcoded keys)
@@ -154,13 +198,29 @@
 **🚀 Start Task**: Ask Kiro: `"Let's implement TASK-5: Build File Parser Service"`
 
 **Steps**:
-1. Create `src/services/fileParser.js`
-2. Implement TXT parser (`src/services/parsers/txtParser.js`)
-3. Implement PDF parser using pdfjs-dist (`src/services/parsers/pdfParser.js`)
-4. Implement EPUB parser (`src/services/parsers/epubParser.js`)
-5. Add structure detection (chapters, sections, paragraphs)
-6. Calculate metadata (word count, character count, read time)
-7. Add file validation and error handling
+- [ ] 5.1 Create file parser orchestrator
+  - Create `src/services/fileParser.js`
+  - Add file validation and error handling
+  - Calculate metadata (word count, character count, read time)
+  - _Requirements: CP-2.1, CP-2.5_
+
+- [ ] 5.2 Implement format-specific parsers
+  - Implement TXT parser (`src/services/parsers/txtParser.js`)
+  - Implement PDF parser using pdfjs-dist (`src/services/parsers/pdfParser.js`)
+  - Implement EPUB parser (`src/services/parsers/epubParser.js`)
+  - _Requirements: CP-2.2, CP-2.4_
+
+- [ ] 5.3 Add structure detection
+  - Detect chapters, sections, paragraphs
+  - Preserve paragraph breaks
+  - _Requirements: CP-2.2, CP-2.3_
+
+- [ ]* 5.4 Write unit tests for file parsers
+  - Test each parser with sample files
+  - Test structure detection accuracy
+  - Test metadata calculation
+  - Test error handling for invalid files
+  - _Requirements: CP-2.1, CP-2.2, CP-2.3, CP-2.4, CP-2.5_
 
 **Acceptance Criteria**:
 - [ ] Handles files up to 10MB
@@ -182,14 +242,30 @@
 **🚀 Start Task**: Ask Kiro: `"Let's implement TASK-6: Create Interpretation Engine"`
 
 **Steps**:
-1. Create `src/services/interpretationEngine.js`
-2. Implement `generateSummary(text, spiritId)` using Bedrock
-3. Implement `rewriteText(text, spiritId)` using Bedrock
-4. Implement `generateEnding(text, spiritIds[])` with parallel Bedrock calls
-5. Implement `analyzeText(text, spiritId)` using Bedrock
-6. Add caching layer (`src/services/interpretationCache.js`) to reduce Bedrock costs
-7. Support parallel generation for multiple spirits
-8. Handle Bedrock-specific errors (ThrottlingException, ValidationException)
+- [ ] 6.1 Create interpretation engine with core methods
+  - Create `src/services/interpretationEngine.js`
+  - Implement `generateSummary(text, spiritId)` using Bedrock
+  - Implement `rewriteText(text, spiritId)` using Bedrock
+  - Implement `analyzeText(text, spiritId)` using Bedrock
+  - _Requirements: CP-4.1, CP-4.2, CP-4.3_
+
+- [ ] 6.2 Add parallel generation and caching
+  - Implement `generateEnding(text, spiritIds[])` with parallel Bedrock calls
+  - Add caching layer (`src/services/interpretationCache.js`)
+  - Support parallel generation for multiple spirits
+  - _Requirements: CP-4.4, CP-4.5_
+
+- [ ] 6.3 Add error handling
+  - Handle Bedrock-specific errors (ThrottlingException, ValidationException)
+  - Implement retry logic
+  - _Requirements: CP-4.1_
+
+- [ ]* 6.4 Write unit tests for interpretation engine
+  - Test each generation method
+  - Test caching behavior
+  - Test parallel generation
+  - Test error handling
+  - _Requirements: CP-4.1, CP-4.2, CP-4.3, CP-4.4, CP-4.5_
 
 **Acceptance Criteria**:
 - [ ] Interpretations complete within 30 seconds for 5000 words
@@ -213,12 +289,23 @@
 **🚀 Start Task**: Ask Kiro: `"Let's implement TASK-7: Build Export Service"`
 
 **Steps**:
-1. Create `src/services/exportService.js`
-2. Implement TXT exporter (`src/services/exporters/txtExporter.js`)
-3. Implement Markdown exporter (`src/services/exporters/markdownExporter.js`)
-4. Implement PDF exporter (`src/services/exporters/pdfExporter.js`)
-5. Implement ZIP exporter for multiple interpretations
-6. Include metadata in all exports
+- [ ] 7.1 Create export service orchestrator
+  - Create `src/services/exportService.js`
+  - Include metadata in all exports
+  - _Requirements: CP-9.1, CP-9.5_
+
+- [ ] 7.2 Implement format-specific exporters
+  - Implement TXT exporter (`src/services/exporters/txtExporter.js`)
+  - Implement Markdown exporter (`src/services/exporters/markdownExporter.js`)
+  - Implement PDF exporter (`src/services/exporters/pdfExporter.js`)
+  - Implement ZIP exporter for multiple interpretations
+  - _Requirements: CP-9.2, CP-9.3, CP-9.4_
+
+- [ ]* 7.3 Write unit tests for export service
+  - Test each export format
+  - Test metadata inclusion
+  - Test ZIP multi-file export
+  - _Requirements: CP-9.1, CP-9.2, CP-9.3, CP-9.4, CP-9.5_
 
 **Acceptance Criteria**:
 - [ ] All selected interpretations included in export
@@ -226,6 +313,29 @@
 - [ ] Markdown uses proper heading hierarchy
 - [ ] ZIP contains separate file per interpretation
 - [ ] Metadata included in all formats
+
+---
+
+### ✅ CHECKPOINT-1: Core Services Complete
+- [ ] **Task Complete**
+- **Status**: 🔴 Blocked (needs TASK-2, TASK-3, TASK-4, TASK-5, TASK-6, TASK-7)
+- **Depends on**: TASK-2, TASK-3, TASK-4, TASK-5, TASK-6, TASK-7
+
+**Description**: Verify all core services are working before building UI.
+
+**🚀 Start Task**: Ask Kiro: `"Let's verify CHECKPOINT-1"`
+
+**Steps**:
+- Ensure all tests pass (if written)
+- Verify spirit definitions are complete
+- Test AI service can connect to Bedrock
+- Test file parser with sample files
+- Ask user if any issues need addressing
+
+**Acceptance Criteria**:
+- [ ] All implemented tests passing
+- [ ] No console errors in development
+- [ ] Core services functional
 
 ---
 
@@ -326,13 +436,29 @@
 **🚀 Start Task**: Ask Kiro: `"Let's implement TASK-11: Build Spectral Timeline Component"`
 
 **Steps**:
-1. Create `src/components/SpectralTimeline.jsx`
-2. Create `src/components/EmotionAnalyzer.jsx` for emotion detection
-3. Implement emotion scoring algorithm (fear, joy, tension, sadness, mystery)
-4. Render timeline with color-coded sections
-5. Add click handler to scroll to section
-6. Ensure accessibility (color contrast, ARIA labels)
-7. Update timeline when text changes
+- [ ] 11.1 Create emotion analysis logic
+  - Create `src/components/EmotionAnalyzer.jsx` for emotion detection
+  - Implement emotion scoring algorithm (fear, joy, tension, sadness, mystery)
+  - Ensure emotion scores sum to 1.0 per section
+  - _Requirements: CP-8.1, CP-8.2_
+
+- [ ] 11.2 Build timeline visualization component
+  - Create `src/components/SpectralTimeline.jsx`
+  - Render timeline with color-coded sections
+  - Add click handler to scroll to section
+  - Update timeline when text changes
+  - _Requirements: CP-8.3, CP-8.5_
+
+- [ ] 11.3 Ensure accessibility
+  - Ensure color contrast for accessibility
+  - Add ARIA labels
+  - _Requirements: CP-8.4_
+
+- [ ]* 11.4 Write unit tests for emotion analyzer
+  - Test emotion scoring algorithm
+  - Test section division logic
+  - Test score normalization (sum to 1.0)
+  - _Requirements: CP-8.1, CP-8.2_
 
 **Acceptance Criteria**:
 - [ ] Timeline divides text into 10-20 sections
@@ -340,6 +466,28 @@
 - [ ] Clicking scrolls to corresponding text
 - [ ] Colors distinguishable for accessibility
 - [ ] Timeline updates when text changes
+
+---
+
+### ✅ CHECKPOINT-2: UI Components Complete
+- [ ] **Task Complete**
+- **Status**: 🔴 Blocked (needs TASK-8, TASK-9, TASK-10, TASK-11)
+- **Depends on**: TASK-8, TASK-9, TASK-10, TASK-11
+
+**Description**: Verify all UI components render correctly before integration.
+
+**🚀 Start Task**: Ask Kiro: `"Let's verify CHECKPOINT-2"`
+
+**Steps**:
+- Test each component in isolation
+- Verify spooky styling is consistent
+- Check responsive behavior on mobile
+- Ask user if any UI adjustments needed
+
+**Acceptance Criteria**:
+- [ ] All components render without errors
+- [ ] Styling is consistent and spooky
+- [ ] Components are responsive
 
 ---
 
@@ -452,25 +600,55 @@
 
 ---
 
+### ✅ CHECKPOINT-3: Application Complete
+- [ ] **Task Complete**
+- **Status**: 🔴 Blocked (needs TASK-12, TASK-13, TASK-14, TASK-15)
+- **Depends on**: TASK-12, TASK-13, TASK-14, TASK-15
+
+**Description**: Final verification before deployment.
+
+**🚀 Start Task**: Ask Kiro: `"Let's verify CHECKPOINT-3"`
+
+**Steps**:
+- Test complete user flow: upload → select spirits → generate → export
+- Verify all features work together
+- Check for console errors
+- Test on different browsers (Chrome, Firefox, Safari)
+- Ask user for final feedback
+
+**Acceptance Criteria**:
+- [ ] All features functional end-to-end
+- [ ] No critical bugs
+- [ ] Performance acceptable
+- [ ] Ready for deployment
+
+---
+
 ## Phase 5: Testing & Deployment
 
-### 🧪 TASK-16: Write Unit Tests
+### 🧪 TASK-16: Comprehensive Unit Testing (Optional)
 - [ ] **Task Complete**
 - **Status**: 🔴 Blocked (needs TASK-3, TASK-4, TASK-5, TASK-6)
 - **Depends on**: TASK-3, TASK-4, TASK-5, TASK-6  
 - **Implements**: Testing strategy
 
-**Description**: Write unit tests for core utilities and services.
+**Description**: Write comprehensive unit tests for core utilities and services (optional for MVP).
 
 **🚀 Start Task**: Ask Kiro: `"Let's implement TASK-16: Write Unit Tests"`
 
 **Steps**:
-1. Set up Vitest testing framework
-2. Write tests for promptBuilder
-3. Write tests for fileParser utilities
-4. Write tests for token estimation
-5. Write tests for emotion analysis
-6. Achieve >80% code coverage for utilities
+- [ ]* 16.1 Set up testing framework
+  - Set up Vitest testing framework
+  - Configure test environment
+  - _Requirements: Testing strategy_
+
+- [ ]* 16.2 Write comprehensive unit tests
+  - Write additional tests for promptBuilder
+  - Write additional tests for fileParser utilities
+  - Write additional tests for token estimation
+  - Write additional tests for emotion analysis
+  - Achieve >80% code coverage for utilities
+  - _Requirements: Testing strategy_
 
 **Acceptance Criteria**:
 - [ ] All utility functions have tests
@@ -480,22 +658,28 @@
 
 ---
 
-### 🔗 TASK-17: Perform Integration Testing
+### 🔗 TASK-17: Integration Testing (Optional)
 - [ ] **Task Complete**
 - **Status**: 🔴 Blocked (needs TASK-13)
 - **Depends on**: TASK-13  
 - **Implements**: Testing strategy
 
-**Description**: Test integrated workflows.
+**Description**: Test integrated workflows (optional for MVP).
 
 **🚀 Start Task**: Ask Kiro: `"Let's implement TASK-17: Perform Integration Testing"`
 
 **Steps**:
-1. Test file upload → parse → display flow
-2. Test spirit selection → interpretation generation
-3. Test export functionality for all formats
-4. Test error recovery scenarios
-5. Test parallel interpretation generation
+- [ ]* 17.1 Test core user flows
+  - Test file upload → parse → display flow
+  - Test spirit selection → interpretation generation
+  - Test export functionality for all formats
+  - _Requirements: Testing strategy_
+
+- [ ]* 17.2 Test error and edge cases
+  - Test error recovery scenarios
+  - Test parallel interpretation generation
+  - Test performance targets
+  - _Requirements: Testing strategy_
 
 **Acceptance Criteria**:
 - [ ] All critical user flows work end-to-end
