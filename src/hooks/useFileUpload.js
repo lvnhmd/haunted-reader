@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useParsedText, useError } from '../context/AppContext';
-import { fileParser } from '../services/fileParser';
+import { parseFile, parseText as parseTextService } from '../services/fileParser';
 
 /**
  * useFileUpload - Hook for handling file uploads and text parsing
@@ -53,7 +53,7 @@ export function useFileUpload() {
 
       try {
         // Parse the file
-        const parsedText = await fileParser.parseFile(file);
+        const parsedText = await parseFile(file);
         
         // Validate parsed content
         if (!parsedText || !parsedText.content || parsedText.content.trim().length === 0) {
@@ -101,7 +101,7 @@ export function useFileUpload() {
       }
 
       try {
-        const parsedText = await fileParser.parseText(text);
+        const parsedText = await parseTextService(text);
         setParsedText(parsedText);
         return parsedText;
       } catch (error) {

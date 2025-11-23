@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useInterpretations, useParsedText, useError } from '../context/AppContext';
-import { interpretationEngine } from '../services/interpretationEngine';
+import { generateSummary } from '../services/interpretationEngine';
 
 /**
  * useGenerateInterpretations - Hook for generating spirit interpretations
@@ -32,7 +32,7 @@ export function useGenerateInterpretations() {
       try {
         addLoadingSpirit(spiritId);
 
-        const interpretation = await interpretationEngine.generateSummary(
+        const interpretation = await generateSummary(
           parsedText.content,
           spiritId
         );
@@ -78,7 +78,7 @@ export function useGenerateInterpretations() {
         // Generate all interpretations in parallel
         const results = await Promise.allSettled(
           spiritIds.map(spiritId =>
-            interpretationEngine.generateSummary(parsedText.content, spiritId)
+            generateSummary(parsedText.content, spiritId)
           )
         );
 
