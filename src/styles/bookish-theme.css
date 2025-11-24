@@ -1,0 +1,114 @@
+/**
+ * Bookish Halloween Theme
+ * Inspired by vintage Halloween books with parchment, ink, and orange accents
+ */
+
+/* Override default dark theme with bookish light theme */
+.bookish-theme {
+  /* Parchment background */
+  --bg-primary: #f8f4e8;
+  --bg-secondary: #f0e8d3;
+  --bg-tertiary: #e8dbb8;
+  
+  /* Ink text colors */
+  --text-primary: #1a1614;
+  --text-secondary: #2d2621;
+  --text-muted: #4a3f35;
+  
+  /* Accent colors */
+  --accent-orange: #e67e22;
+  --accent-orange-light: #f39c12;
+  --accent-orange-dark: #d35400;
+  
+  /* Border colors */
+  --border-light: #dcc89d;
+  --border-dark: #8f7249;
+}
+
+/* Apply bookish theme globally */
+body.bookish {
+  background: linear-gradient(135deg, #fdfbf7 0%, #f0e8d3 100%);
+  color: #1a1614;
+}
+
+/* Handwritten/sketchy text style */
+.text-handwritten {
+  font-family: 'Caveat', 'Comic Sans MS', cursive;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.text-spooky {
+  font-family: 'Creepster', cursive;
+  letter-spacing: 0.05em;
+}
+
+/* Parchment card style */
+.card-parchment {
+  background: #fdfbf7;
+  border: 2px solid #8f7249;
+  box-shadow: 0 4px 6px rgba(26, 22, 20, 0.1);
+}
+
+.card-parchment:hover {
+  box-shadow: 0 6px 12px rgba(26, 22, 20, 0.15);
+}
+
+/* Orange accent elements */
+.accent-star {
+  color: #e67e22;
+}
+
+/* Sketchy button style */
+.btn-sketchy {
+  background: #fdfbf7;
+  border: 2px solid #1a1614;
+  color: #1a1614;
+  font-family: 'Caveat', cursive;
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s;
+}
+
+.btn-sketchy:hover {
+  background: #e67e22;
+  border-color: #d35400;
+  transform: rotate(-1deg) scale(1.05);
+}
+
+.btn-sketchy:active {
+  transform: rotate(1deg) scale(0.98);
+}
+
+/* Sketchy border effect */
+.border-sketchy {
+  border: 2px solid #1a1614;
+  border-radius: 4px;
+  position: relative;
+}
+
+.border-sketchy::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid #1a1614;
+  border-radius: 4px;
+  opacity: 0.3;
+  transform: rotate(-0.5deg);
+}
+
+/* Parchment texture overlay */
+.parchment-texture {
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(139, 125, 107, 0.03) 2px,
+      rgba(139, 125, 107, 0.03) 4px
+    );
+}

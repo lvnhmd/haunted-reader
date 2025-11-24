@@ -74,16 +74,16 @@ function AppContent() {
   const showTimeline = parsedText && activeView === 'timeline';
 
   return (
-    <div className="min-h-screen bg-gray-950">
+    <div className="min-h-screen bg-parchment-100">
       {/* Header */}
-      <header className="bg-gray-900 border-b-2 border-purple-600 sticky top-0 z-50">
+      <header className="bg-parchment-50 border-b-4 border-ink sticky top-0 z-50 parchment-texture">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-purple-400 mb-1">
+              <h1 className="text-4xl font-bold text-ink text-handwritten mb-1">
                 👻 The Haunted Reader
               </h1>
-              <p className="text-gray-400 text-sm">
+              <p className="text-ink-lighter text-sm font-book">
                 Summon the spirits to interpret your text...
               </p>
             </div>
@@ -93,20 +93,20 @@ function AppContent() {
               <nav className="flex gap-2">
                 <button
                   onClick={() => setActiveView('upload')}
-                  className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                  className={`px-4 py-2 rounded-lg font-handwritten text-lg transition-all ${
                     activeView === 'upload'
-                      ? 'bg-purple-600 text-white'
-                      : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                      ? 'bg-spooky-orange text-parchment-50 border-2 border-ink'
+                      : 'bg-parchment-200 text-ink border-2 border-ink-lighter hover:bg-parchment-300'
                   }`}
                 >
                   📄 Upload
                 </button>
                 <button
                   onClick={() => setActiveView('spirits')}
-                  className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                  className={`px-4 py-2 rounded-lg font-handwritten text-lg transition-all ${
                     activeView === 'spirits'
-                      ? 'bg-purple-600 text-white'
-                      : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                      ? 'bg-spooky-orange text-parchment-50 border-2 border-ink'
+                      : 'bg-parchment-200 text-ink border-2 border-ink-lighter hover:bg-parchment-300'
                   }`}
                 >
                   👻 Spirits
@@ -114,10 +114,10 @@ function AppContent() {
                 {interpretations.length > 0 && (
                   <button
                     onClick={() => setActiveView('interpretations')}
-                    className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                    className={`px-4 py-2 rounded-lg font-handwritten text-lg transition-all ${
                       activeView === 'interpretations'
-                        ? 'bg-purple-600 text-white'
-                        : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                        ? 'bg-spooky-orange text-parchment-50 border-2 border-ink'
+                        : 'bg-parchment-200 text-ink border-2 border-ink-lighter hover:bg-parchment-300'
                     }`}
                   >
                     📖 Interpretations
@@ -125,10 +125,10 @@ function AppContent() {
                 )}
                 <button
                   onClick={() => setActiveView('timeline')}
-                  className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                  className={`px-4 py-2 rounded-lg font-handwritten text-lg transition-all ${
                     activeView === 'timeline'
-                      ? 'bg-purple-600 text-white'
-                      : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                      ? 'bg-spooky-orange text-parchment-50 border-2 border-ink'
+                      : 'bg-parchment-200 text-ink border-2 border-ink-lighter hover:bg-parchment-300'
                   }`}
                 >
                   📊 Timeline
