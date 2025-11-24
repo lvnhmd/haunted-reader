@@ -88,9 +88,7 @@ cat > /tmp/bedrock-policy.json <<EOF
         "bedrock:InvokeModelWithResponseStream"
       ],
       "Resource": [
-        "arn:aws:bedrock:$AWS_REGION::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0",
-        "arn:aws:bedrock:$AWS_REGION::foundation-model/anthropic.claude-3-haiku-20240307-v1:0",
-        "arn:aws:bedrock:$AWS_REGION::foundation-model/amazon.titan-text-express-v1"
+        "arn:aws:bedrock:$AWS_REGION::foundation-model/*"
       ]
     }
   ]

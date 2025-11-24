@@ -5,14 +5,25 @@
 
 import {
   createBedrockClient,
-  invokeModel,
+  invokeModel as invokeBedrockModel,
   invokeModelStreaming,
-  validateCredentials
+  validateCredentials as validateBedrockCredentials
 } from './aiProviders/bedrockProvider.js';
+import {
+  invokeModel as invokeLambdaModel,
+  validateCredentials as validateLambdaCredentials
+} from './aiProviders/lambdaProvider.js';
 import { getRecommendedModel, MODEL_PARAMETERS } from './aiProviders/bedrockModels.js';
 
 // Singleton client instance
 let bedrockClient = null;
+
+/**
+ * Check if Lambda proxy is configured
+ */
+function useLambdaProxy() {
+  return !!import.meta.env.VITE_API_ENDPOINT;
+}
 
 /**
  * Get or create Bedrock client
@@ -130,18 +141,30 @@ export async function generate(prompt, options = {}) {
     maxTokens: maxTokens ?? params.maxTokens
   };
 
-  // Generate with retry logic
-  const client = getClient();
-  
-  return await withRetry(async () => {
-    return await invokeModel(
-      client,
-      selectedModel,
-      prompt,
-      systemPrompt,
-      generationOptions
-    );
-  });
+  // Use Lambda proxy if configured, otherwise use direct Bedrock
+  if (useLambdaProxy()) {
+    return await withRetry(async () => {
+      return await invokeLambdaModel(
+        selectedModel,
+        prompt,
+        systemPrompt,
+        generationOptions
+      );
+    });
+  } else {
+    // Generate with retry logic using direct Bedrock
+    const client = getClient();
+    
+    return await withRetry(async () => {
+      return await invokeBedrockModel(
+        client,
+        selectedModel,
+        prompt,
+        systemPrompt,
+        generationOptions
+      );
+    });
+  }
 }
 
 /**
@@ -187,8 +210,12 @@ export async function* generateStreaming(prompt, options = {}) {
  */
 export async function checkCredentials() {
   try {
-    const client = getClient();
-    return await validateCredentials(client);
+    if (useLambdaProxy()) {
+      return await validateLambdaCredentials();
+    } else {
+      const client = getClient();
+      return await validateBedrockCredentials(client);
+    }
   } catch (error) {
     console.error('Credential validation error:', error);
     return false;
