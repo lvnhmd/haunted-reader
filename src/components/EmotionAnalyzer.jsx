@@ -11,13 +11,15 @@
 const EMOTION_KEYWORDS = {
   fear: [
     'afraid', 'fear', 'terror', 'horror', 'dread', 'panic', 'scared', 'frightened',
-    'nightmare', 'scream', 'shadow', 'dark', 'death', 'blood', 'ghost', 'monster',
-    'danger', 'threat', 'evil', 'sinister', 'ominous', 'foreboding', 'menace'
+    'nightmare', 'scream', 'shadow', 'darkness', 'death', 'blood', 'ghost', 'monster',
+    'danger', 'threat', 'evil', 'sinister', 'ominous', 'foreboding', 'menace',
+    'terrified', 'horrified', 'petrified', 'alarmed', 'fearful'
   ],
   joy: [
     'happy', 'joy', 'delight', 'pleasure', 'laugh', 'smile', 'cheerful', 'merry',
     'glad', 'content', 'bliss', 'elated', 'jubilant', 'ecstatic', 'wonderful',
-    'beautiful', 'love', 'hope', 'bright', 'light', 'warm', 'celebrate'
+    'beautiful', 'love', 'hope', 'bright', 'light', 'warm', 'celebrate', 'merrily',
+    'dream', 'gentle', 'gently', 'sweet', 'peaceful', 'serene', 'calm'
   ],
   tension: [
     'tense', 'anxious', 'nervous', 'worried', 'stress', 'pressure', 'urgent',
@@ -102,7 +104,9 @@ function calculateEmotionScores(text) {
   Object.keys(EMOTION_KEYWORDS).forEach(emotion => {
     EMOTION_KEYWORDS[emotion].forEach(keyword => {
       // Count occurrences of keyword in text
-      const regex = new RegExp(`\\b${keyword}\\w*\\b`, 'gi');
+      // Use word boundaries to match whole words and their variations
+      // e.g., "merry" matches "merry", "merrily", "merriment"
+      const regex = new RegExp(`\\b${keyword}`, 'gi');
       const matches = lowerText.match(regex);
       if (matches) {
         counts[emotion] += matches.length;
