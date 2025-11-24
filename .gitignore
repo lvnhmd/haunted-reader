@@ -37,3 +37,8 @@ coverage/
 
 # DO NOT IGNORE .kiro/ - Required for hackathon submission!
 # .kiro/
+
+# Lambda deployment artifacts
+lambda-deploy/
+lambda-deploy.zip
+*.zip
