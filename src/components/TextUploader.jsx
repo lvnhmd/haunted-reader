@@ -92,7 +92,7 @@ const TextUploader = ({ onTextParsed, onError }) => {
     <div className="space-y-6">
       {/* Header */}
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-purple-400 mb-2">
+        <h2 className="text-3xl font-bold text-ink font-underdog mb-2">
           📚 Summon Your Text
         </h2>
         <p className="text-gray-400">
@@ -106,11 +106,11 @@ const TextUploader = ({ onTextParsed, onError }) => {
           onClick={() => setActiveTab('file')}
           disabled={isProcessing}
           className={`
-            px-6 py-2 rounded-lg font-semibold transition-all duration-300
+            px-6 py-2 font-handwritten text-lg transition-all duration-300
             ${
               activeTab === 'file'
-                ? 'bg-purple-600 text-white'
-                : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                ? 'bg-spooky-orange text-parchment-50 border-2 border-ink'
+                : 'bg-parchment-50 text-ink border-2 border-ink-lighter hover:bg-parchment-200'
             }
             ${isProcessing ? 'opacity-50 cursor-not-allowed' : ''}
           `}
@@ -121,11 +121,11 @@ const TextUploader = ({ onTextParsed, onError }) => {
           onClick={() => setActiveTab('paste')}
           disabled={isProcessing}
           className={`
-            px-6 py-2 rounded-lg font-semibold transition-all duration-300
+            px-6 py-2 font-handwritten text-lg transition-all duration-300
             ${
               activeTab === 'paste'
-                ? 'bg-purple-600 text-white'
-                : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                ? 'bg-spooky-orange text-parchment-50 border-2 border-ink'
+                : 'bg-parchment-50 text-ink border-2 border-ink-lighter hover:bg-parchment-200'
             }
             ${isProcessing ? 'opacity-50 cursor-not-allowed' : ''}
           `}
@@ -137,13 +137,13 @@ const TextUploader = ({ onTextParsed, onError }) => {
       {/* Upload progress bar (for large files) */}
       {isProcessing && uploadProgress > 0 && (
         <div className="space-y-2">
-          <div className="w-full bg-gray-800 rounded-full h-3 overflow-hidden">
+          <div className="w-full bg-parchment-200 border-2 border-ink h-3 overflow-hidden">
             <div
-              className="bg-purple-600 h-full transition-all duration-300 ease-out"
+              className="bg-spooky-orange h-full transition-all duration-300 ease-out"
               style={{ width: `${uploadProgress}%` }}
             />
           </div>
-          <p className="text-center text-sm text-purple-400">
+          <p className="text-center text-sm text-spooky-orange font-handwritten">
             {uploadProgress < 100 ? '👻 Summoning spirits...' : '✨ Almost there...'}
           </p>
         </div>
