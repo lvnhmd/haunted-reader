@@ -34,8 +34,9 @@ export default {
       fontFamily: {
         'handwritten': ['Caveat', 'Comic Sans MS', 'cursive'],
         'spooky': ['Creepster', 'cursive'],
-        'book': ['Merriweather', 'Georgia', 'serif'],
+        'book': ['Lato', 'sans-serif'],
         'underdog': ['Underdog', 'cursive'],
+        'sans': ['Lato', 'sans-serif'],
       },
     },
   },
