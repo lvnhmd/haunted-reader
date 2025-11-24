@@ -93,20 +93,20 @@ function AppContent() {
               <nav className="flex gap-2">
                 <button
                   onClick={() => setActiveView('upload')}
-                  className={`px-4 py-2 rounded-lg font-handwritten text-lg transition-all ${
+                  className={`px-4 py-2 font-handwritten text-lg transition-all ${
                     activeView === 'upload'
                       ? 'bg-spooky-orange text-parchment-50 border-2 border-ink'
-                      : 'bg-parchment-200 text-ink border-2 border-ink-lighter hover:bg-parchment-300'
+                      : 'bg-parchment-50 text-ink border-2 border-ink-lighter hover:bg-spooky-orange-light hover:text-parchment-50'
                   }`}
                 >
                   📄 Upload
                 </button>
                 <button
                   onClick={() => setActiveView('spirits')}
-                  className={`px-4 py-2 rounded-lg font-handwritten text-lg transition-all ${
+                  className={`px-4 py-2 font-handwritten text-lg transition-all ${
                     activeView === 'spirits'
                       ? 'bg-spooky-orange text-parchment-50 border-2 border-ink'
-                      : 'bg-parchment-200 text-ink border-2 border-ink-lighter hover:bg-parchment-300'
+                      : 'bg-parchment-50 text-ink border-2 border-ink-lighter hover:bg-spooky-orange-light hover:text-parchment-50'
                   }`}
                 >
                   👻 Spirits
@@ -114,10 +114,10 @@ function AppContent() {
                 {interpretations.length > 0 && (
                   <button
                     onClick={() => setActiveView('interpretations')}
-                    className={`px-4 py-2 rounded-lg font-handwritten text-lg transition-all ${
+                    className={`px-4 py-2 font-handwritten text-lg transition-all ${
                       activeView === 'interpretations'
                         ? 'bg-spooky-orange text-parchment-50 border-2 border-ink'
-                        : 'bg-parchment-200 text-ink border-2 border-ink-lighter hover:bg-parchment-300'
+                        : 'bg-parchment-50 text-ink border-2 border-ink-lighter hover:bg-spooky-orange-light hover:text-parchment-50'
                     }`}
                   >
                     📖 Interpretations
@@ -125,10 +125,10 @@ function AppContent() {
                 )}
                 <button
                   onClick={() => setActiveView('timeline')}
-                  className={`px-4 py-2 rounded-lg font-handwritten text-lg transition-all ${
+                  className={`px-4 py-2 font-handwritten text-lg transition-all ${
                     activeView === 'timeline'
                       ? 'bg-spooky-orange text-parchment-50 border-2 border-ink'
-                      : 'bg-parchment-200 text-ink border-2 border-ink-lighter hover:bg-parchment-300'
+                      : 'bg-parchment-50 text-ink border-2 border-ink-lighter hover:bg-spooky-orange-light hover:text-parchment-50'
                   }`}
                 >
                   📊 Timeline
