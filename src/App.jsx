@@ -80,7 +80,7 @@ function AppContent() {
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-ink text-handwritten mb-1">
+              <h1 className="text-4xl font-bold text-ink font-underdog mb-1">
                 👻 The Haunted Reader
               </h1>
               <p className="text-ink-lighter text-sm font-book">

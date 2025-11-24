@@ -61,7 +61,7 @@ const SpectralTimeline = ({ text, onSectionClick }) => {
     <div className="space-y-6">
       {/* Header */}
       <div className="bg-parchment-50 border-2 border-ink p-4 parchment-texture">
-        <h2 className="text-2xl font-bold text-ink font-handwritten mb-2">
+        <h2 className="text-2xl font-bold text-ink font-underdog mb-2">
           👻 Spectral Timeline
         </h2>
         <p className="text-ink-lighter text-sm font-book">

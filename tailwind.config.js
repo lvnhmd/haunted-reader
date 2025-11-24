@@ -35,6 +35,7 @@ export default {
         'handwritten': ['Caveat', 'Comic Sans MS', 'cursive'],
         'spooky': ['Creepster', 'cursive'],
         'book': ['Merriweather', 'Georgia', 'serif'],
+        'underdog': ['Underdog', 'cursive'],
       },
     },
   },
