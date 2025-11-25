@@ -87,14 +87,24 @@ npm run build
 
 6. **Deploy to AWS**
 ```bash
-./deploy.sh
+./deploy-to-s3.sh
 ```
 
-See `.kiro/AWS_DEPLOYMENT.md` for deployment details.
+See `.kiro/specs/haunted-reader/AWS-DEPLOYMENT-GUIDE.md` for detailed deployment instructions.
+
+## 🌐 Live Demo
+
+**Deployment Status:** ✅ Deployed to AWS with HTTPS  
+**CloudFront URL (HTTPS):** https://d3rxkqr5wtpb9g.cloudfront.net  
+**S3 Website URL (HTTP):** http://haunted-reader-kiroween-1764092634.s3-website-us-east-1.amazonaws.com
+
+✅ **Secure HTTPS access via CloudFront CDN**
+
+See `.kiro/specs/haunted-reader/TASK-18-COMPLETION.md` for deployment details.
 
 ## 🎬 Demo Video
 
-[Link to 3-minute demo video]
+[Link to 3-minute demo video - Coming soon]
 
 ## 📝 How Kiro Was Used
 

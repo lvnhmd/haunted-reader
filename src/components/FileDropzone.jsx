@@ -29,7 +29,7 @@ const FileDropzone = ({ onFileSelect, onError, disabled = false }) => {
     [onFileSelect, onError]
   );
 
-  const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive, isDragReject, open } = useDropzone({
     onDrop,
     accept: {
       'text/plain': ['.txt'],
@@ -38,7 +38,9 @@ const FileDropzone = ({ onFileSelect, onError, disabled = false }) => {
     },
     maxSize: 10 * 1024 * 1024, // 10MB
     multiple: false,
-    disabled
+    disabled,
+    noClick: false,
+    noKeyboard: false
   });
 
   return (
