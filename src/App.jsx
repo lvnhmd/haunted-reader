@@ -4,12 +4,15 @@ import { useParsedText, useSpirits, useInterpretations, useError } from './conte
 import useFileUpload from './hooks/useFileUpload';
 import useGenerateInterpretations from './hooks/useGenerateInterpretations';
 import useExport from './hooks/useExport';
+import useToast from './hooks/useToast';
 
 // Components
 import TextUploader from './components/TextUploader';
 import SpiritGallery from './components/SpiritGallery';
 import InterpretationViewer from './components/InterpretationViewer';
 import SpectralTimeline from './components/SpectralTimeline';
+import ErrorBoundary from './components/ErrorBoundary';
+import { ToastContainer } from './components/Toast';
 
 /**
  * AppContent - Main application content (inside AppProvider)
@@ -27,6 +30,7 @@ function AppContent() {
   const { uploadFile, parseText } = useFileUpload();
   const { generateMultiple, regenerate } = useGenerateInterpretations();
   const { exportSingle, exportAll } = useExport();
+  const toast = useToast();
 
   /**
    * Handle text upload from TextUploader
@@ -321,9 +325,11 @@ function AppContent() {
  */
 function App() {
   return (
-    <AppProvider>
-      <AppContent />
-    </AppProvider>
+    <ErrorBoundary>
+      <AppProvider>
+        <AppContent />
+      </AppProvider>
+    </ErrorBoundary>
   );
 }
 
