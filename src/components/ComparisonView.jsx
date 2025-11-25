@@ -117,11 +117,11 @@ const ComparisonView = ({
 
       {/* Comparison tips */}
       {displayedInterpretations.length > 1 && (
-        <div className="bg-purple-900/20 rounded-lg border border-purple-600 p-4">
-          <h4 className="text-sm font-semibold text-purple-400 mb-2">
+        <div className="bg-parchment-100 border-2 border-ink-lighter p-4 parchment-texture">
+          <h4 className="text-sm font-semibold text-ink font-handwritten mb-2">
             💡 Comparison Tips
           </h4>
-          <ul className="text-sm text-gray-400 space-y-1">
+          <ul className="text-sm text-ink-lighter space-y-1 font-book">
             <li>• Each panel scrolls independently</li>
             <li>• Compare writing styles and perspectives side-by-side</li>
             <li>• Export individual interpretations or all at once</li>

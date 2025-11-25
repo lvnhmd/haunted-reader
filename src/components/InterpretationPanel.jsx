@@ -93,15 +93,15 @@ const InterpretationPanel = ({
         <div className="flex items-center space-x-3">
           <span className="text-4xl">{spirit.icon}</span>
           <div>
-            <h3 className="text-xl font-bold text-white">{spirit.name}</h3>
-            <p className="text-sm text-gray-400">{spirit.description}</p>
+            <h3 className="text-xl font-bold text-ink font-handwritten">{spirit.name}</h3>
+            <p className="text-sm text-ink-lighter font-book">{spirit.description}</p>
           </div>
         </div>
 
         {/* Expand/Collapse button */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="text-gray-400 hover:text-white transition-colors p-2"
+          className="text-ink-lighter hover:text-ink transition-colors p-2"
           aria-label={isExpanded ? 'Collapse panel' : 'Expand panel'}
         >
           {isExpanded ? '▼' : '▶'}
@@ -112,29 +112,29 @@ const InterpretationPanel = ({
       {isExpanded && (
         <>
           {/* Metadata */}
-          <div className="p-4 border-b border-gray-700 flex flex-wrap gap-4 text-sm">
+          <div className="p-4 border-b border-ink-lighter flex flex-wrap gap-4 text-sm">
             <div className="flex items-center space-x-2">
-              <span className="text-gray-500">📅</span>
-              <span className="text-gray-400">
+              <span className="text-ink-lighter">📅</span>
+              <span className="text-ink font-book">
                 {new Date(interpretation.generatedAt).toLocaleString()}
               </span>
             </div>
             <div className="flex items-center space-x-2">
-              <span className="text-gray-500">📝</span>
-              <span className="text-gray-400">
+              <span className="text-ink-lighter">📝</span>
+              <span className="text-ink font-book">
                 {interpretation.wordCount || 0} words
               </span>
             </div>
             <div className="flex items-center space-x-2">
-              <span className="text-gray-500">🎭</span>
-              <span className="text-gray-400 capitalize">{spirit.category}</span>
+              <span className="text-ink-lighter">🎭</span>
+              <span className="text-ink capitalize font-book">{spirit.category}</span>
             </div>
           </div>
 
           {/* Interpretation content - scrollable */}
           <div className="flex-1 overflow-y-auto p-6">
-            <div className="prose prose-invert max-w-none">
-              <div className="text-gray-200 whitespace-pre-wrap leading-relaxed">
+            <div className="prose max-w-none">
+              <div className="text-ink whitespace-pre-wrap leading-relaxed font-book">
                 {interpretation.content}
               </div>
             </div>

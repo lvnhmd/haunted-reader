@@ -36,7 +36,7 @@ const InterpretationViewer = ({
             <h2 className="text-2xl font-bold text-ink font-underdog mb-1">
               👻 Spirit Interpretations
             </h2>
-            <p className="text-gray-400 text-sm">
+            <p className="text-ink-lighter text-sm font-book">
               {interpretations.length > 0
                 ? `${interpretations.length} interpretation${
                     interpretations.length !== 1 ? 's' : ''
@@ -95,20 +95,20 @@ const InterpretationViewer = ({
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold text-ink font-handwritten">📄 Original Text</h3>
               {originalText && (
-                <span className="text-sm text-gray-400">
+                <span className="text-sm text-ink-lighter font-book">
                   {originalText.split(/\s+/).length} words
                 </span>
               )}
             </div>
-            <div className="prose prose-invert max-w-none">
+            <div className="prose max-w-none">
               {originalText ? (
-                <div className="text-gray-200 whitespace-pre-wrap leading-relaxed max-h-[600px] overflow-y-auto">
+                <div className="text-ink whitespace-pre-wrap leading-relaxed max-h-[600px] overflow-y-auto font-book">
                   {originalText}
                 </div>
               ) : (
                 <div className="text-center py-12">
                   <div className="text-6xl mb-4">📄</div>
-                  <p className="text-gray-500">No text uploaded yet</p>
+                  <p className="text-ink-lighter font-book">No text uploaded yet</p>
                 </div>
               )}
             </div>
@@ -168,7 +168,7 @@ const InterpretationViewer = ({
                 <h3 className="text-xl font-semibold text-ink font-handwritten mb-2">
                   No interpretations yet
                 </h3>
-                <p className="text-gray-500">
+                <p className="text-ink-lighter font-book">
                   Select spirits and generate interpretations to see them here
                 </p>
               </div>
@@ -194,7 +194,7 @@ const InterpretationViewer = ({
           <h4 className="text-sm font-semibold text-ink font-handwritten mb-2">
             💡 Viewing Tips
           </h4>
-          <ul className="text-sm text-gray-500 space-y-1">
+          <ul className="text-sm text-ink-lighter space-y-1 font-book">
             <li>
               • <strong>Original Text:</strong> Always accessible - view your
               uploaded text anytime
