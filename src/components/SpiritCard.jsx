@@ -9,17 +9,17 @@ const SpiritCard = ({ spirit, isSelected, onClick, disabled = false }) => {
 
   // Category colors for visual distinction
   const categoryColors = {
-    author: 'border-purple-500 hover:border-purple-400',
-    character: 'border-red-500 hover:border-red-400',
-    perspective: 'border-blue-500 hover:border-blue-400',
-    abstract: 'border-orange-500 hover:border-orange-400',
+    author: 'border-spooky-orange hover:border-spooky-orange-dark',
+    character: 'border-red-600 hover:border-red-700',
+    perspective: 'border-blue-600 hover:border-blue-700',
+    abstract: 'border-ink hover:border-ink-light',
   };
 
   const selectedColors = {
-    author: 'bg-purple-900 border-purple-400 shadow-purple-500/50',
-    character: 'bg-red-900 border-red-400 shadow-red-500/50',
-    perspective: 'bg-blue-900 border-blue-400 shadow-blue-500/50',
-    abstract: 'bg-orange-900 border-orange-400 shadow-orange-500/50',
+    author: 'bg-spooky-orange border-ink shadow-spooky-orange/50',
+    character: 'bg-red-600 border-ink shadow-red-600/50',
+    perspective: 'bg-blue-600 border-ink shadow-blue-600/50',
+    abstract: 'bg-ink-light border-ink shadow-ink/50',
   };
 
   return (
@@ -33,7 +33,7 @@ const SpiritCard = ({ spirit, isSelected, onClick, disabled = false }) => {
         ${
           isSelected
             ? `${selectedColors[spirit.category]} shadow-lg scale-105`
-            : `bg-gray-900 ${categoryColors[spirit.category]}`
+            : `bg-parchment-50 ${categoryColors[spirit.category]}`
         }
         ${!disabled && !isSelected ? 'hover:scale-105 hover:shadow-lg' : ''}
       `}
@@ -67,10 +67,10 @@ const SpiritCard = ({ spirit, isSelected, onClick, disabled = false }) => {
       <div className="text-center mb-3">
         <span
           className={`
-          inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase
-          ${spirit.category === 'author' ? 'bg-purple-700 text-purple-200' : ''}
-          ${spirit.category === 'character' ? 'bg-red-700 text-red-200' : ''}
-          ${spirit.category === 'perspective' ? 'bg-blue-700 text-blue-200' : ''}
+          inline-block px-3 py-1 text-xs font-semibold uppercase border-2
+          ${spirit.category === 'author' ? 'bg-spooky-orange text-parchment-50 border-ink' : ''}
+          ${spirit.category === 'character' ? 'bg-red-600 text-white border-ink' : ''}
+          ${spirit.category === 'perspective' ? 'bg-blue-600 text-white border-ink' : ''}
           ${spirit.category === 'abstract' ? 'bg-orange-700 text-orange-200' : ''}
         `}
         >
@@ -85,8 +85,8 @@ const SpiritCard = ({ spirit, isSelected, onClick, disabled = false }) => {
 
       {/* Voice preview on hover */}
       {isHovering && !disabled && (
-        <div className="mt-4 p-4 bg-black/50 rounded-lg border border-gray-700 animate-fadeIn">
-          <h4 className="text-xs font-semibold text-gray-300 mb-2 uppercase">
+        <div className="mt-4 p-4 bg-parchment-100 border-2 border-ink animate-fadeIn parchment-texture">
+          <h4 className="text-xs font-semibold text-ink mb-2 uppercase font-handwritten">
             👻 Voice Preview
           </h4>
           <p className="text-xs text-gray-400 italic">

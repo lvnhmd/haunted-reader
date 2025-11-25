@@ -64,7 +64,7 @@ const SpiritGallery = ({
     <div className="space-y-6">
       {/* Header */}
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-purple-400 mb-2">
+        <h2 className="text-3xl font-bold text-ink font-underdog mb-2">
           👻 Choose Your Spirits
         </h2>
         <p className="text-gray-400">
@@ -81,8 +81,8 @@ const SpiritGallery = ({
                 inline-block px-4 py-2 rounded-full font-semibold
                 ${
                   selectedSpirits.length >= maxSelections
-                    ? 'bg-orange-600 text-white'
-                    : 'bg-purple-600 text-white'
+                    ? 'bg-spooky-orange text-parchment-50'
+                    : 'bg-spooky-orange text-parchment-50'
                 }
               `}
             >
@@ -124,8 +124,8 @@ const SpiritGallery = ({
 
       {/* Selected spirits summary */}
       {selectedSpirits.length > 0 && (
-        <div className="mt-8 p-6 bg-gray-900 rounded-lg border-2 border-purple-600">
-          <h3 className="text-xl font-semibold text-purple-400 mb-4">
+        <div className="mt-8 p-6 bg-parchment-50 border-2 border-ink parchment-texture">
+          <h3 className="text-xl font-semibold text-ink font-handwritten mb-4">
             ✨ Selected Spirits
           </h3>
           <div className="flex flex-wrap gap-3">
@@ -136,7 +136,7 @@ const SpiritGallery = ({
               return (
                 <div
                   key={spiritId}
-                  className="flex items-center gap-2 px-4 py-2 bg-purple-800 rounded-full"
+                  className="flex items-center gap-2 px-4 py-2 bg-spooky-orange border-2 border-ink"
                 >
                   <span className="text-2xl">{spirit.icon}</span>
                   <span className="text-white font-semibold">{spirit.name}</span>

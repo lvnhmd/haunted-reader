@@ -266,37 +266,37 @@ function AppContent() {
         {!parsedText && activeView === 'upload' && (
           <div className="max-w-4xl mx-auto text-center py-12">
             <div className="text-8xl mb-6">👻</div>
-            <h2 className="text-3xl font-bold text-purple-400 mb-4">
+            <h2 className="text-3xl font-bold text-ink font-underdog mb-4">
               Welcome to The Haunted Reader
             </h2>
-            <p className="text-xl text-gray-400 mb-8">
+            <p className="text-xl text-ink-lighter mb-8 font-book">
               Upload your text and let the spirits interpret it through their unique perspectives
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-              <div className="bg-gray-900 p-6 rounded-lg border-2 border-purple-600">
+              <div className="bg-parchment-50 p-6 border-2 border-ink parchment-texture">
                 <div className="text-4xl mb-3">📄</div>
-                <h3 className="text-lg font-semibold text-white mb-2">
+                <h3 className="text-lg font-semibold text-ink mb-2 font-handwritten">
                   1. Upload Text
                 </h3>
-                <p className="text-sm text-gray-400">
+                <p className="text-sm text-ink-lighter font-book">
                   Upload a TXT, PDF, or EPUB file, or paste your text directly
                 </p>
               </div>
-              <div className="bg-gray-900 p-6 rounded-lg border-2 border-purple-600">
+              <div className="bg-parchment-50 p-6 border-2 border-ink parchment-texture">
                 <div className="text-4xl mb-3">👻</div>
-                <h3 className="text-lg font-semibold text-white mb-2">
+                <h3 className="text-lg font-semibold text-ink mb-2 font-handwritten">
                   2. Select Spirits
                 </h3>
-                <p className="text-sm text-gray-400">
+                <p className="text-sm text-ink-lighter font-book">
                   Choose up to 5 literary spirits to interpret your text
                 </p>
               </div>
-              <div className="bg-gray-900 p-6 rounded-lg border-2 border-purple-600">
+              <div className="bg-parchment-50 p-6 border-2 border-ink parchment-texture">
                 <div className="text-4xl mb-3">📖</div>
-                <h3 className="text-lg font-semibold text-white mb-2">
+                <h3 className="text-lg font-semibold text-ink mb-2 font-handwritten">
                   3. View & Export
                 </h3>
-                <p className="text-sm text-gray-400">
+                <p className="text-sm text-ink-lighter font-book">
                   Compare interpretations and export in multiple formats
                 </p>
               </div>
@@ -306,8 +306,8 @@ function AppContent() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 border-t-2 border-purple-600 mt-16">
-        <div className="container mx-auto px-4 py-6 text-center text-gray-400 text-sm">
+      <footer className="bg-parchment-100 border-t-2 border-ink mt-16 parchment-texture">
+        <div className="container mx-auto px-4 py-6 text-center text-ink-lighter text-sm font-book">
           <p>👻 The Haunted Reader • Kiroween Hackathon 2025</p>
           <p className="mt-2">Built with React, Vite, Tailwind CSS, and Amazon Bedrock</p>
         </div>

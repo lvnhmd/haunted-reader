@@ -48,9 +48,9 @@ const FileDropzone = ({ onFileSelect, onError, disabled = false }) => {
         relative border-2 border-dashed rounded-lg p-8 text-center cursor-pointer
         transition-all duration-300 ease-in-out
         ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
-        ${isDragActive && !isDragReject ? 'border-purple-500 bg-purple-900/20 scale-105' : ''}
+        ${isDragActive && !isDragReject ? 'border-spooky-orange bg-spooky-orange/10 scale-105' : ''}
         ${isDragReject ? 'border-red-500 bg-red-900/20' : ''}
-        ${!isDragActive && !disabled ? 'border-gray-600 hover:border-purple-400 hover:bg-purple-900/10' : ''}
+        ${!isDragActive && !disabled ? 'border-ink-lighter hover:border-spooky-orange hover:bg-spooky-orange/5' : ''}
       `}
     >
       <input {...getInputProps()} />
@@ -63,11 +63,11 @@ const FileDropzone = ({ onFileSelect, onError, disabled = false }) => {
       {/* Instructions */}
       <div className="text-lg mb-2">
         {isDragActive ? (
-          <p className="text-purple-300 font-semibold">Release to summon the spirits...</p>
+          <p className="text-spooky-orange font-handwritten font-semibold">Release to summon the spirits...</p>
         ) : (
-          <p className="text-gray-300">
-            <span className="text-purple-400 font-semibold">Drop your text</span> or{' '}
-            <span className="text-purple-400 font-semibold">click to browse</span>
+          <p className="text-ink font-book">
+            <span className="text-spooky-orange font-handwritten font-semibold">Drop your text</span> or{' '}
+            <span className="text-spooky-orange font-handwritten font-semibold">click to browse</span>
           </p>
         )}
       </div>

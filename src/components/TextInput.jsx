@@ -44,12 +44,12 @@ const TextInput = ({ onTextSubmit, disabled = false }) => {
             disabled={disabled}
             placeholder="📜 Paste your text here... The spirits are listening..."
             className={`
-              w-full h-64 p-4 rounded-lg resize-none
-              bg-gray-900 border-2 text-gray-100
-              placeholder-gray-600
+              w-full h-64 p-4 resize-none font-book
+              bg-parchment-50 border-2 text-ink
+              placeholder-ink-lighter
               transition-all duration-300
               ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
-              ${isFocused ? 'border-purple-500 ring-2 ring-purple-500/50' : 'border-gray-700'}
+              ${isFocused ? 'border-spooky-orange ring-2 ring-spooky-orange/50' : 'border-ink-lighter'}
               focus:outline-none
             `}
           />
@@ -78,12 +78,12 @@ const TextInput = ({ onTextSubmit, disabled = false }) => {
             type="submit"
             disabled={disabled || !text.trim()}
             className={`
-              px-6 py-2 rounded-lg font-semibold
+              px-6 py-2 font-handwritten text-lg
               transition-all duration-300
               ${
                 disabled || !text.trim()
-                  ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
-                  : 'bg-purple-600 text-white hover:bg-purple-700 hover:scale-105 active:scale-95'
+                  ? 'bg-parchment-200 text-ink-lighter cursor-not-allowed border-2 border-ink-lighter'
+                  : 'bg-spooky-orange text-parchment-50 hover:bg-spooky-orange-dark hover:scale-105 active:scale-95 border-2 border-ink'
               }
             `}
           >
