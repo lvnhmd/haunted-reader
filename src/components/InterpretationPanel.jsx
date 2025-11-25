@@ -39,16 +39,16 @@ const InterpretationPanel = ({
       : 'Generating interpretation...';
 
     return (
-      <div className={`bg-gray-900 rounded-lg border-2 border-purple-600 p-6 ${className}`}>
+      <div className={`bg-parchment-50 border-2 border-ink p-6 parchment-texture ${className}`}>
         <div className="flex flex-col items-center justify-center space-y-4 py-12">
           <div className="text-6xl animate-bounce">{spirit?.icon || '👻'}</div>
-          <div className="text-xl text-purple-400 font-semibold animate-pulse">
+          <div className="text-xl text-spooky-orange font-handwritten font-semibold animate-pulse">
             {message}
           </div>
           <div className="flex space-x-2">
-            <div className="w-3 h-3 bg-purple-500 rounded-full animate-pulse"></div>
-            <div className="w-3 h-3 bg-purple-500 rounded-full animate-pulse delay-75"></div>
-            <div className="w-3 h-3 bg-purple-500 rounded-full animate-pulse delay-150"></div>
+            <div className="w-3 h-3 bg-spooky-orange animate-pulse"></div>
+            <div className="w-3 h-3 bg-spooky-orange animate-pulse delay-75"></div>
+            <div className="w-3 h-3 bg-spooky-orange animate-pulse delay-150"></div>
           </div>
         </div>
       </div>
@@ -57,32 +57,32 @@ const InterpretationPanel = ({
 
   if (!spirit) {
     return (
-      <div className={`bg-gray-900 rounded-lg border-2 border-red-600 p-6 ${className}`}>
-        <p className="text-red-400">Error: Spirit not found</p>
+      <div className={`bg-parchment-50 border-2 border-red-600 p-6 parchment-texture ${className}`}>
+        <p className="text-red-600 font-book">Error: Spirit not found</p>
       </div>
     );
   }
 
   // Category colors
   const categoryColors = {
-    author: 'border-purple-500',
-    character: 'border-red-500',
-    perspective: 'border-blue-500',
-    abstract: 'border-orange-500',
+    author: 'border-spooky-orange',
+    character: 'border-red-600',
+    perspective: 'border-blue-600',
+    abstract: 'border-ink',
   };
 
   const categoryBgColors = {
-    author: 'bg-purple-900/30',
-    character: 'bg-red-900/30',
-    perspective: 'bg-blue-900/30',
-    abstract: 'bg-orange-900/30',
+    author: 'bg-spooky-orange/10',
+    character: 'bg-red-600/10',
+    perspective: 'bg-blue-600/10',
+    abstract: 'bg-ink/10',
   };
 
   return (
     <div
-      className={`bg-gray-900 rounded-lg border-2 ${
+      className={`bg-parchment-50 border-2 ${
         categoryColors[spirit.category]
-      } ${className} flex flex-col h-full`}
+      } ${className} flex flex-col h-full parchment-texture`}
     >
       {/* Header */}
       <div
@@ -144,14 +144,14 @@ const InterpretationPanel = ({
           <div className="p-4 border-t border-gray-700 flex gap-3">
             <button
               onClick={() => onExport(interpretation)}
-              className="flex-1 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors font-semibold"
+              className="flex-1 px-4 py-2 bg-green-600 hover:bg-green-700 text-parchment-50 border-2 border-ink transition-colors font-handwritten text-lg"
               aria-label="Export interpretation"
             >
               💾 Export
             </button>
             <button
               onClick={() => onRegenerate(interpretation.spiritId)}
-              className="flex-1 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-semibold"
+              className="flex-1 px-4 py-2 bg-spooky-orange hover:bg-spooky-orange-dark text-parchment-50 border-2 border-ink transition-colors font-handwritten text-lg"
               aria-label="Regenerate interpretation"
             >
               🔄 Regenerate

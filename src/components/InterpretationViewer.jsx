@@ -30,10 +30,10 @@ const InterpretationViewer = ({
   return (
     <div className="space-y-6">
       {/* Header with view mode toggle */}
-      <div className="bg-gray-900 rounded-lg border-2 border-purple-600 p-4">
+      <div className="bg-parchment-50 border-2 border-ink p-4 parchment-texture">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-purple-400 mb-1">
+            <h2 className="text-2xl font-bold text-ink font-underdog mb-1">
               👻 Spirit Interpretations
             </h2>
             <p className="text-gray-400 text-sm">
@@ -56,10 +56,10 @@ const InterpretationViewer = ({
                 disabled={
                   mode.id !== 'original' && !hasInterpretations
                 }
-                className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                className={`px-4 py-2 font-handwritten text-lg transition-all ${
                   viewMode === mode.id
-                    ? 'bg-purple-600 text-white'
-                    : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                    ? 'bg-spooky-orange text-parchment-50 border-2 border-ink'
+                    : 'bg-parchment-50 text-ink border-2 border-ink-lighter hover:bg-parchment-200'
                 } ${
                   mode.id !== 'original' && !hasInterpretations
                     ? 'opacity-50 cursor-not-allowed'
@@ -79,7 +79,7 @@ const InterpretationViewer = ({
           <div className="mt-4 pt-4 border-t border-gray-700">
             <button
               onClick={onExportAll}
-              className="w-full md:w-auto px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors font-semibold"
+              className="w-full md:w-auto px-6 py-2 bg-green-600 hover:bg-green-700 text-parchment-50 border-2 border-ink transition-colors font-handwritten text-lg"
             >
               💾 Export All Interpretations
             </button>
@@ -91,9 +91,9 @@ const InterpretationViewer = ({
       <div className="min-h-[400px]">
         {/* Original text view */}
         {viewMode === 'original' && (
-          <div className="bg-gray-900 rounded-lg border-2 border-gray-700 p-6">
+          <div className="bg-parchment-50 border-2 border-ink p-6 parchment-texture">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-white">📄 Original Text</h3>
+              <h3 className="text-xl font-bold text-ink font-handwritten">📄 Original Text</h3>
               {originalText && (
                 <span className="text-sm text-gray-400">
                   {originalText.split(/\s+/).length} words
@@ -120,8 +120,8 @@ const InterpretationViewer = ({
           <div className="space-y-4">
             {/* Interpretation selector */}
             {interpretations.length > 1 && (
-              <div className="bg-gray-900 rounded-lg border-2 border-purple-600 p-4">
-                <label className="block text-sm font-semibold text-purple-400 mb-2">
+              <div className="bg-parchment-50 border-2 border-ink p-4 parchment-texture">
+                <label className="block text-sm font-semibold text-ink font-handwritten mb-2">
                   Select interpretation to view:
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -129,10 +129,10 @@ const InterpretationViewer = ({
                     <button
                       key={interpretation.spiritId}
                       onClick={() => setSelectedInterpretationIndex(index)}
-                      className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                      className={`px-4 py-2 font-handwritten text-lg transition-all ${
                         selectedInterpretationIndex === index
-                          ? 'bg-purple-600 text-white'
-                          : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                          ? 'bg-spooky-orange text-parchment-50 border-2 border-ink'
+                          : 'bg-parchment-50 text-ink border-2 border-ink-lighter hover:bg-parchment-200'
                       }`}
                     >
                       {interpretation.spiritId}
@@ -163,9 +163,9 @@ const InterpretationViewer = ({
                 />
               </div>
             ) : (
-              <div className="bg-gray-900 rounded-lg border-2 border-gray-700 p-12 text-center">
+              <div className="bg-parchment-50 border-2 border-ink p-12 text-center parchment-texture">
                 <div className="text-6xl mb-4">👻</div>
-                <h3 className="text-xl font-semibold text-gray-400 mb-2">
+                <h3 className="text-xl font-semibold text-ink font-handwritten mb-2">
                   No interpretations yet
                 </h3>
                 <p className="text-gray-500">
@@ -190,8 +190,8 @@ const InterpretationViewer = ({
 
       {/* Help text */}
       {hasInterpretations && (
-        <div className="bg-gray-900/50 rounded-lg border border-gray-700 p-4">
-          <h4 className="text-sm font-semibold text-gray-400 mb-2">
+        <div className="bg-parchment-100 border-2 border-ink-lighter p-4 parchment-texture">
+          <h4 className="text-sm font-semibold text-ink font-handwritten mb-2">
             💡 Viewing Tips
           </h4>
           <ul className="text-sm text-gray-500 space-y-1">
