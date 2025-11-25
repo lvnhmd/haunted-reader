@@ -79,8 +79,13 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-parchment-100">
+      {/* Skip to main content link for keyboard navigation */}
+      <a href="#main-content" className="skip-to-main">
+        Skip to main content
+      </a>
+      
       {/* Header */}
-      <header className="bg-parchment-50 border-b-4 border-ink sticky top-0 z-50 parchment-texture">
+      <header className="bg-parchment-50 border-b-4 border-ink sticky top-0 z-50 parchment-texture" role="banner">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div>
@@ -94,7 +99,7 @@ function AppContent() {
             
             {/* Navigation tabs */}
             {parsedText && (
-              <nav className="flex gap-2">
+              <nav className="flex gap-2" role="navigation" aria-label="Main navigation">
                 <button
                   onClick={() => setActiveView('upload')}
                   className={`px-4 py-2 font-handwritten text-lg transition-all ${
@@ -102,8 +107,10 @@ function AppContent() {
                       ? 'bg-spooky-orange text-parchment-50 border-2 border-ink'
                       : 'bg-parchment-50 text-ink border-2 border-ink-lighter hover:bg-spooky-orange-light hover:text-parchment-50'
                   }`}
+                  aria-label="Upload text view"
+                  aria-current={activeView === 'upload' ? 'page' : undefined}
                 >
-                  📄 Upload
+                  <span aria-hidden="true">📄</span> Upload
                 </button>
                 <button
                   onClick={() => setActiveView('spirits')}
@@ -112,8 +119,10 @@ function AppContent() {
                       ? 'bg-spooky-orange text-parchment-50 border-2 border-ink'
                       : 'bg-parchment-50 text-ink border-2 border-ink-lighter hover:bg-spooky-orange-light hover:text-parchment-50'
                   }`}
+                  aria-label="Select spirits view"
+                  aria-current={activeView === 'spirits' ? 'page' : undefined}
                 >
-                  👻 Spirits
+                  <span aria-hidden="true">👻</span> Spirits
                 </button>
                 {interpretations.length > 0 && (
                   <button
@@ -123,8 +132,10 @@ function AppContent() {
                         ? 'bg-spooky-orange text-parchment-50 border-2 border-ink'
                         : 'bg-parchment-50 text-ink border-2 border-ink-lighter hover:bg-spooky-orange-light hover:text-parchment-50'
                     }`}
+                    aria-label="View interpretations"
+                    aria-current={activeView === 'interpretations' ? 'page' : undefined}
                   >
-                    📖 Interpretations
+                    <span aria-hidden="true">📖</span> Interpretations
                   </button>
                 )}
                 <button
@@ -134,8 +145,10 @@ function AppContent() {
                       ? 'bg-spooky-orange text-parchment-50 border-2 border-ink'
                       : 'bg-parchment-50 text-ink border-2 border-ink-lighter hover:bg-spooky-orange-light hover:text-parchment-50'
                   }`}
+                  aria-label="Spectral timeline view"
+                  aria-current={activeView === 'timeline' ? 'page' : undefined}
                 >
-                  📊 Timeline
+                  <span aria-hidden="true">📊</span> Timeline
                 </button>
               </nav>
             )}
@@ -145,7 +158,7 @@ function AppContent() {
 
       {/* Error display */}
       {error && (
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-4" role="alert" aria-live="assertive">
           <div className="max-w-4xl mx-auto p-4 bg-red-900/20 border-2 border-red-500 rounded-lg flex items-start justify-between">
             <div>
               <p className="text-red-400 font-semibold">{error.message}</p>
@@ -156,16 +169,16 @@ function AppContent() {
             <button
               onClick={clearError}
               className="text-red-400 hover:text-red-300 ml-4"
-              aria-label="Close error"
+              aria-label="Close error message"
             >
-              ✕
+              <span aria-hidden="true">✕</span>
             </button>
           </div>
         </div>
       )}
 
       {/* Main content */}
-      <main className="container mx-auto px-4 py-8">
+      <main id="main-content" className="container mx-auto px-4 py-8" role="main">
         {/* Upload view */}
         {activeView === 'upload' && (
           <div className="max-w-4xl mx-auto space-y-8">
@@ -208,8 +221,9 @@ function AppContent() {
                 <button
                   onClick={() => setActiveView('spirits')}
                   className="mt-6 w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold transition-colors"
+                  aria-label="Proceed to select spirits"
                 >
-                  Select Spirits →
+                  Select Spirits <span aria-hidden="true">→</span>
                 </button>
               </div>
             )}
@@ -232,6 +246,10 @@ function AppContent() {
                   onClick={handleGenerateInterpretations}
                   disabled={loadingSpirits.length > 0}
                   className="px-8 py-4 bg-green-600 hover:bg-green-700 text-white rounded-lg font-bold text-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-label={loadingSpirits.length > 0 
+                    ? `Generating interpretations, ${loadingSpirits.length} of ${selectedSpirits.length} remaining`
+                    : `Generate interpretations for ${selectedSpirits.length} selected spirits`}
+                  aria-live="polite"
                 >
                   {loadingSpirits.length > 0
                     ? `Generating... (${loadingSpirits.length}/${selectedSpirits.length})`

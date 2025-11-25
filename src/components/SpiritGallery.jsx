@@ -1,7 +1,8 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import SpiritCard from './SpiritCard';
 import SpiritFilter from './SpiritFilter';
 import { spirits, getCategories } from '../spirits/spiritDefinitions';
+import { announceToScreenReader } from '../utils/accessibility';
 
 /**
  * SpiritGallery - Main gallery component for displaying and selecting spirits
@@ -32,10 +33,12 @@ const SpiritGallery = ({
     if (disabled) return;
 
     const isCurrentlySelected = selectedSpirits.includes(spiritId);
+    const spirit = spirits.find((s) => s.id === spiritId);
 
     if (isCurrentlySelected) {
       // Deselect spirit
       onSpiritSelect(selectedSpirits.filter((id) => id !== spiritId));
+      announceToScreenReader(`${spirit?.name || spiritId} deselected. ${selectedSpirits.length - 1} spirits selected.`);
     } else {
       // Select spirit
       if (multiSelect) {
@@ -43,12 +46,15 @@ const SpiritGallery = ({
         if (selectedSpirits.length >= maxSelections) {
           // Show warning (could be replaced with toast notification)
           console.warn(`Maximum ${maxSelections} spirits can be selected`);
+          announceToScreenReader(`Maximum ${maxSelections} spirits already selected. Please deselect a spirit first.`, 'assertive');
           return;
         }
         onSpiritSelect([...selectedSpirits, spiritId]);
+        announceToScreenReader(`${spirit?.name || spiritId} selected. ${selectedSpirits.length + 1} of ${maxSelections} spirits selected.`);
       } else {
         // Single select mode
         onSpiritSelect([spiritId]);
+        announceToScreenReader(`${spirit?.name || spiritId} selected.`);
       }
     }
   };
@@ -58,6 +64,8 @@ const SpiritGallery = ({
    */
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
+    const count = category === 'all' ? spirits.length : spirits.filter(s => s.category === category).length;
+    announceToScreenReader(`Showing ${count} ${category === 'all' ? '' : category} spirits.`);
   };
 
   return (
@@ -101,7 +109,11 @@ const SpiritGallery = ({
       />
 
       {/* Spirit grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div 
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+        role="group"
+        aria-label="Available spirits"
+      >
         {filteredSpirits.map((spirit) => (
           <SpiritCard
             key={spirit.id}
@@ -115,9 +127,9 @@ const SpiritGallery = ({
 
       {/* No results message */}
       {filteredSpirits.length === 0 && (
-        <div className="text-center py-12">
+        <div className="text-center py-12" role="status" aria-live="polite">
           <p className="text-gray-500 text-lg">
-            👻 No spirits found in this category
+            <span aria-hidden="true">👻</span> No spirits found in this category
           </p>
         </div>
       )}
@@ -144,9 +156,9 @@ const SpiritGallery = ({
                     onClick={() => handleSpiritClick(spiritId)}
                     disabled={disabled}
                     className="ml-2 text-red-400 hover:text-red-300 transition-colors"
-                    aria-label={`Remove ${spirit.name}`}
+                    aria-label={`Remove ${spirit.name} from selection`}
                   >
-                    ✕
+                    <span aria-hidden="true">✕</span>
                   </button>
                 </div>
               );

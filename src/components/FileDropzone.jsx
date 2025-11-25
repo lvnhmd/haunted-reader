@@ -52,11 +52,14 @@ const FileDropzone = ({ onFileSelect, onError, disabled = false }) => {
         ${isDragReject ? 'border-red-500 bg-red-900/20' : ''}
         ${!isDragActive && !disabled ? 'border-ink-lighter hover:border-spooky-orange hover:bg-spooky-orange/5' : ''}
       `}
+      role="button"
+      aria-label="Upload text file. Drag and drop or click to browse. Accepts TXT, PDF, or EPUB files up to 10MB."
+      tabIndex={disabled ? -1 : 0}
     >
-      <input {...getInputProps()} />
+      <input {...getInputProps()} aria-label="File upload input" />
       
       {/* Spooky icon */}
-      <div className="text-6xl mb-4 animate-pulse">
+      <div className="text-6xl mb-4 animate-pulse" aria-hidden="true">
         {isDragActive ? '👻' : '📖'}
       </div>
 
@@ -79,7 +82,7 @@ const FileDropzone = ({ onFileSelect, onError, disabled = false }) => {
 
       {/* Decorative elements */}
       {!disabled && (
-        <div className="absolute top-2 right-2 text-2xl opacity-50 animate-bounce">
+        <div className="absolute top-2 right-2 text-2xl opacity-50 animate-bounce" aria-hidden="true">
           🕯️
         </div>
       )}

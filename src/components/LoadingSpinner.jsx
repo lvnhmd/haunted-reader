@@ -17,9 +17,9 @@ const LoadingSpinner = ({ message = 'Summoning spirits...', size = 'md', fullScr
   };
 
   const spinner = (
-    <div className="flex flex-col items-center justify-center gap-4">
+    <div className="flex flex-col items-center justify-center gap-4" role="status" aria-live="polite">
       {/* Spinning ghost animation */}
-      <div className={`${sizeClasses[size]} relative`}>
+      <div className={`${sizeClasses[size]} relative`} aria-hidden="true">
         <div className="absolute inset-0 animate-spin">
           <div className="text-6xl">👻</div>
         </div>
@@ -31,9 +31,12 @@ const LoadingSpinner = ({ message = 'Summoning spirits...', size = 'md', fullScr
           {message}
         </p>
       )}
+      
+      {/* Screen reader only text */}
+      <span className="sr-only">{message || 'Loading'} Please wait.</span>
 
       {/* Floating dots */}
-      <div className="flex gap-2">
+      <div className="flex gap-2" aria-hidden="true">
         <div className="w-2 h-2 bg-spooky-orange animate-bounce" style={{ animationDelay: '0ms' }}></div>
         <div className="w-2 h-2 bg-spooky-orange animate-bounce" style={{ animationDelay: '150ms' }}></div>
         <div className="w-2 h-2 bg-spooky-orange animate-bounce" style={{ animationDelay: '300ms' }}></div>
@@ -59,11 +62,12 @@ const LoadingSpinner = ({ message = 'Summoning spirits...', size = 'md', fullScr
  */
 export const InlineLoader = ({ message }) => {
   return (
-    <div className="flex items-center gap-2">
-      <div className="animate-spin text-2xl">👻</div>
+    <div className="flex items-center gap-2" role="status" aria-live="polite">
+      <div className="animate-spin text-2xl" aria-hidden="true">👻</div>
       {message && (
         <span className="text-sm text-ink-lighter font-book">{message}</span>
       )}
+      <span className="sr-only">{message || 'Loading'}</span>
     </div>
   );
 };
@@ -73,14 +77,16 @@ export const InlineLoader = ({ message }) => {
  */
 export const SkeletonLoader = ({ lines = 3, className = '' }) => {
   return (
-    <div className={`space-y-3 ${className}`}>
+    <div className={`space-y-3 ${className}`} role="status" aria-live="polite" aria-label="Loading content">
       {Array.from({ length: lines }).map((_, i) => (
         <div
           key={i}
           className="h-4 bg-parchment-200 animate-pulse"
           style={{ width: `${Math.random() * 30 + 70}%` }}
+          aria-hidden="true"
         ></div>
       ))}
+      <span className="sr-only">Loading content, please wait.</span>
     </div>
   );
 };

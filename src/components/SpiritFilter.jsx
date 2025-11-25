@@ -23,7 +23,7 @@ const SpiritFilter = ({ selectedCategory, onCategoryChange, categories, disabled
   const allCategories = ['all', ...categories];
 
   return (
-    <div className="flex flex-wrap justify-center gap-3">
+    <div className="flex flex-wrap justify-center gap-3" role="group" aria-label="Filter spirits by category">
       {allCategories.map((category) => {
         const isActive = selectedCategory === category;
         
@@ -43,9 +43,9 @@ const SpiritFilter = ({ selectedCategory, onCategoryChange, categories, disabled
               }
             `}
             aria-pressed={isActive}
-            aria-label={`Filter by ${categoryLabels[category]}`}
+            aria-label={`Filter by ${categoryLabels[category]}${isActive ? ', currently selected' : ''}`}
           >
-            <span className="text-lg">{categoryIcons[category]}</span>
+            <span className="text-lg" aria-hidden="true">{categoryIcons[category]}</span>
             <span>{categoryLabels[category]}</span>
           </button>
         );

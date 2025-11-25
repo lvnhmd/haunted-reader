@@ -35,14 +35,19 @@ const TextInput = ({ onTextSubmit, disabled = false }) => {
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Textarea */}
         <div className="relative">
+          <label htmlFor="text-input" className="sr-only">
+            Paste your text here for spirit interpretation
+          </label>
           <textarea
+            id="text-input"
             value={text}
             onChange={(e) => setText(e.target.value)}
             onPaste={handlePaste}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             disabled={disabled}
-            placeholder="📜 Paste your text here... The spirits are listening..."
+            placeholder="Paste your text here... The spirits are listening..."
+            aria-describedby="text-input-help"
             className={`
               w-full h-64 p-4 resize-none font-book
               bg-parchment-50 border-2 text-ink
@@ -56,7 +61,7 @@ const TextInput = ({ onTextSubmit, disabled = false }) => {
 
           {/* Decorative corner element */}
           {isFocused && (
-            <div className="absolute top-2 right-2 text-xl animate-pulse">
+            <div className="absolute top-2 right-2 text-xl animate-pulse" aria-hidden="true">
               👁️
             </div>
           )}
@@ -65,7 +70,7 @@ const TextInput = ({ onTextSubmit, disabled = false }) => {
         {/* Stats and submit */}
         <div className="flex items-center justify-between">
           {/* Character/word count */}
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-gray-500" aria-live="polite" aria-atomic="true">
             <span className={charCount > 45000 ? 'text-orange-400' : ''}>
               {charCount.toLocaleString()} characters
             </span>
@@ -86,15 +91,16 @@ const TextInput = ({ onTextSubmit, disabled = false }) => {
                   : 'bg-spooky-orange text-parchment-50 hover:bg-spooky-orange-dark hover:scale-105 active:scale-95 border-2 border-ink'
               }
             `}
+            aria-label={disabled ? 'Processing text' : text.trim() ? 'Submit text for interpretation' : 'Enter text to submit'}
           >
-            {disabled ? '⏳ Processing...' : '🔮 Summon Spirits'}
+            <span aria-hidden="true">{disabled ? '⏳' : '🔮'}</span> {disabled ? 'Processing...' : 'Summon Spirits'}
           </button>
         </div>
       </form>
 
       {/* Help text */}
-      <p className="text-xs text-gray-600 text-center">
-        💀 Paste any text up to 50,000 characters
+      <p id="text-input-help" className="text-xs text-gray-600 text-center">
+        <span aria-hidden="true">💀</span> Paste any text up to 50,000 characters
       </p>
     </div>
   );

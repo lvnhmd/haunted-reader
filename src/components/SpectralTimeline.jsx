@@ -6,6 +6,7 @@ import {
   getEmotionTextColor,
   formatEmotionScores
 } from './EmotionAnalyzer';
+import { announceToScreenReader } from '../utils/accessibility';
 
 /**
  * SpectralTimeline - Visualizes emotional flow of text
@@ -37,6 +38,8 @@ const SpectralTimeline = ({ text, onSectionClick }) => {
    */
   const handleSectionClick = (section) => {
     setSelectedSection(section.index);
+    const dominantEmotion = getDominantEmotion(section.emotions);
+    announceToScreenReader(`Section ${section.index + 1} selected. Dominant emotion: ${dominantEmotion}.`);
     if (onSectionClick) {
       onSectionClick(section.index);
     }
@@ -72,8 +75,8 @@ const SpectralTimeline = ({ text, onSectionClick }) => {
       {/* Timeline visualization */}
       <div className="bg-parchment-50 border-2 border-ink p-6 parchment-texture">
         {/* Legend */}
-        <div className="mb-6">
-          <h3 className="text-sm font-semibold text-ink-lighter mb-3 uppercase font-book">
+        <div className="mb-6" role="group" aria-label="Emotion color legend">
+          <h3 className="text-sm font-semibold text-ink-lighter mb-3 uppercase font-book" id="emotion-legend">
             Emotion Legend
           </h3>
           <div className="flex flex-wrap gap-4">
@@ -81,7 +84,8 @@ const SpectralTimeline = ({ text, onSectionClick }) => {
               <div key={emotion} className="flex items-center gap-2">
                 <div
                   className={`w-4 h-4 ${getEmotionColor(emotion)}`}
-                  aria-label={`${emotion} color`}
+                  role="img"
+                  aria-label={`${emotion} color indicator`}
                 />
                 <span className="text-sm text-ink capitalize font-book">
                   {emotion}
@@ -92,7 +96,7 @@ const SpectralTimeline = ({ text, onSectionClick }) => {
         </div>
 
         {/* Timeline bars */}
-        <div className="space-y-2">
+        <div className="space-y-2" role="group" aria-label="Emotional timeline sections" aria-describedby="emotion-legend">
           {emotionData.map((section) => {
             const dominantEmotion = getDominantEmotion(section.emotions);
             const isHovered = hoveredSection === section.index;
@@ -105,6 +109,8 @@ const SpectralTimeline = ({ text, onSectionClick }) => {
                   onClick={() => handleSectionClick(section)}
                   onMouseEnter={() => setHoveredSection(section.index)}
                   onMouseLeave={() => setHoveredSection(null)}
+                  onFocus={() => setHoveredSection(section.index)}
+                  onBlur={() => setHoveredSection(null)}
                   className={`
                     w-full h-8 transition-all duration-200 border-2 border-ink
                     ${getEmotionColor(dominantEmotion)}
@@ -113,10 +119,10 @@ const SpectralTimeline = ({ text, onSectionClick }) => {
                     hover:scale-105 hover:shadow-lg
                     focus:outline-none focus:ring-2 focus:ring-ink
                   `}
-                  aria-label={`Section ${section.index + 1}: ${dominantEmotion}`}
-                  title={`Section ${section.index + 1}: Click to view`}
+                  aria-label={`Section ${section.index + 1} of ${emotionData.length}. Dominant emotion: ${dominantEmotion}. ${section.text.split(/\s+/).length} words. ${isSelected ? 'Currently selected.' : 'Press Enter to select.'}`}
+                  aria-pressed={isSelected}
                 >
-                  <span className={`text-xs font-semibold font-handwritten ${getEmotionTextColor(dominantEmotion)}`}>
+                  <span className={`text-xs font-semibold font-handwritten ${getEmotionTextColor(dominantEmotion)}`} aria-hidden="true">
                     {section.index + 1}
                   </span>
                 </button>

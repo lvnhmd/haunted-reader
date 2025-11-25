@@ -27,6 +27,8 @@ const SpiritCard = ({ spirit, isSelected, onClick, disabled = false }) => {
       onClick={disabled ? undefined : onClick}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
+      onFocus={() => setIsHovering(true)}
+      onBlur={() => setIsHovering(false)}
       className={`
         relative p-6 rounded-lg border-2 transition-all duration-300 cursor-pointer
         ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
@@ -40,7 +42,7 @@ const SpiritCard = ({ spirit, isSelected, onClick, disabled = false }) => {
       role="button"
       tabIndex={disabled ? -1 : 0}
       aria-pressed={isSelected}
-      aria-label={`${spirit.name} - ${spirit.description}`}
+      aria-label={`${spirit.name}, ${spirit.category} spirit. ${spirit.description}. ${isSelected ? 'Selected' : 'Not selected'}. Press Enter or Space to ${isSelected ? 'deselect' : 'select'}.`}
       onKeyDown={(e) => {
         if (!disabled && (e.key === 'Enter' || e.key === ' ')) {
           e.preventDefault();
@@ -50,13 +52,16 @@ const SpiritCard = ({ spirit, isSelected, onClick, disabled = false }) => {
     >
       {/* Selection indicator */}
       {isSelected && (
-        <div className="absolute -top-2 -right-2 bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-lg shadow-lg animate-pulse">
+        <div 
+          className="absolute -top-2 -right-2 bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-lg shadow-lg animate-pulse"
+          aria-hidden="true"
+        >
           ✓
         </div>
       )}
 
       {/* Spirit icon */}
-      <div className="text-6xl mb-3 text-center">{spirit.icon}</div>
+      <div className="text-6xl mb-3 text-center" aria-hidden="true">{spirit.icon}</div>
 
       {/* Spirit name */}
       <h3 className="text-xl font-bold text-center mb-2 text-white">

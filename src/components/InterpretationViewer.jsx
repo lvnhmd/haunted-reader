@@ -48,7 +48,7 @@ const InterpretationViewer = ({
           </div>
 
           {/* View mode toggle */}
-          <div className="flex gap-2">
+          <div className="flex gap-2" role="group" aria-label="View mode selection">
             {viewModes.map((mode) => (
               <button
                 key={mode.id}
@@ -65,10 +65,11 @@ const InterpretationViewer = ({
                     ? 'opacity-50 cursor-not-allowed'
                     : ''
                 }`}
-                aria-label={mode.label}
+                aria-label={`${mode.label}${viewMode === mode.id ? ', currently selected' : ''}`}
+                aria-pressed={viewMode === mode.id}
               >
                 <span className="hidden sm:inline">{mode.label}</span>
-                <span className="sm:hidden">{mode.icon}</span>
+                <span className="sm:hidden" aria-hidden="true">{mode.icon}</span>
               </button>
             ))}
           </div>
@@ -80,8 +81,9 @@ const InterpretationViewer = ({
             <button
               onClick={onExportAll}
               className="w-full md:w-auto px-6 py-2 bg-green-600 hover:bg-green-700 text-parchment-50 border-2 border-ink transition-colors font-handwritten text-lg"
+              aria-label={`Export all ${interpretations.length} interpretations`}
             >
-              💾 Export All Interpretations
+              <span aria-hidden="true">💾</span> Export All Interpretations
             </button>
           </div>
         )}
@@ -121,10 +123,10 @@ const InterpretationViewer = ({
             {/* Interpretation selector */}
             {interpretations.length > 1 && (
               <div className="bg-parchment-50 border-2 border-ink p-4 parchment-texture">
-                <label className="block text-sm font-semibold text-ink font-handwritten mb-2">
+                <label className="block text-sm font-semibold text-ink font-handwritten mb-2" id="interpretation-selector-label">
                   Select interpretation to view:
                 </label>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2" role="group" aria-labelledby="interpretation-selector-label">
                   {interpretations.map((interpretation, index) => (
                     <button
                       key={interpretation.spiritId}
@@ -134,6 +136,8 @@ const InterpretationViewer = ({
                           ? 'bg-spooky-orange text-parchment-50 border-2 border-ink'
                           : 'bg-parchment-50 text-ink border-2 border-ink-lighter hover:bg-parchment-200'
                       }`}
+                      aria-label={`View ${interpretation.spiritId} interpretation`}
+                      aria-pressed={selectedInterpretationIndex === index}
                     >
                       {interpretation.spiritId}
                     </button>
