@@ -86,7 +86,7 @@ const Toast = ({ message, type = 'info', duration = 5000, onClose }) => {
 /**
  * ToastContainer - Manages multiple toast notifications
  */
-export const ToastContainer = ({ toasts, removeToast }) => {
+export const ToastContainer = ({ toasts = [], removeToast = () => {} }) => {
   return (
     <div className="fixed bottom-0 right-0 p-4 space-y-2 z-50">
       {toasts.map((toast) => (

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import InterpretationPanel from './InterpretationPanel';
-import ComparisonView from './ComparisonView';
+import InterpretationPanel from './InterpretationPanel-DaisyUI';
+import ComparisonView from './ComparisonView-DaisyUI';
 
 /**
  * InterpretationViewer - DaisyUI redesigned viewer for displaying interpretations

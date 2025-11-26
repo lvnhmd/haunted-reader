@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import FileDropzone from './FileDropzone';
-import TextInput from './TextInput';
+import FileDropzone from './FileDropzone-DaisyUI';
+import TextInput from './TextInput-DaisyUI';
 import { parseFile, parseText } from '../services/fileParser';
 
 /**

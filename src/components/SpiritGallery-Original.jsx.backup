@@ -5,7 +5,7 @@ import { spirits, getCategories } from '../spirits/spiritDefinitions';
 import { announceToScreenReader } from '../utils/accessibility';
 
 /**
- * SpiritGallery - DaisyUI redesigned gallery for displaying and selecting spirits
+ * SpiritGallery - Main gallery component for displaying and selecting spirits
  * Supports multi-select (up to 5 spirits) with category filtering
  */
 const SpiritGallery = ({
@@ -18,6 +18,7 @@ const SpiritGallery = ({
   const [selectedCategory, setSelectedCategory] = useState('all');
   const categories = getCategories();
 
+  // Filter spirits by selected category
   const filteredSpirits = useMemo(() => {
     if (selectedCategory === 'all') {
       return spirits;
@@ -25,6 +26,9 @@ const SpiritGallery = ({
     return spirits.filter((spirit) => spirit.category === selectedCategory);
   }, [selectedCategory]);
 
+  /**
+   * Handle spirit selection/deselection
+   */
   const handleSpiritClick = (spiritId) => {
     if (disabled) return;
 
@@ -32,11 +36,15 @@ const SpiritGallery = ({
     const spirit = spirits.find((s) => s.id === spiritId);
 
     if (isCurrentlySelected) {
+      // Deselect spirit
       onSpiritSelect(selectedSpirits.filter((id) => id !== spiritId));
       announceToScreenReader(`${spirit?.name || spiritId} deselected. ${selectedSpirits.length - 1} spirits selected.`);
     } else {
+      // Select spirit
       if (multiSelect) {
+        // Check if we've reached max selections
         if (selectedSpirits.length >= maxSelections) {
+          // Show warning (could be replaced with toast notification)
           console.warn(`Maximum ${maxSelections} spirits can be selected`);
           announceToScreenReader(`Maximum ${maxSelections} spirits already selected. Please deselect a spirit first.`, 'assertive');
           return;
@@ -44,12 +52,16 @@ const SpiritGallery = ({
         onSpiritSelect([...selectedSpirits, spiritId]);
         announceToScreenReader(`${spirit?.name || spiritId} selected. ${selectedSpirits.length + 1} of ${maxSelections} spirits selected.`);
       } else {
+        // Single select mode
         onSpiritSelect([spiritId]);
         announceToScreenReader(`${spirit?.name || spiritId} selected.`);
       }
     }
   };
 
+  /**
+   * Handle category filter change
+   */
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     const count = category === 'all' ? spirits.length : spirits.filter(s => s.category === category).length;
@@ -58,37 +70,37 @@ const SpiritGallery = ({
 
   return (
     <div className="space-y-6">
-      {/* Header Card */}
-      <div className="card bg-base-200 shadow-xl">
-        <div className="card-body text-center">
-          <h2 className="card-title text-3xl font-underdog justify-center">
-            👻 Choose Your Spirits
-          </h2>
-          <p className="text-base-content/70">
-            {multiSelect
-              ? `Select up to ${maxSelections} spirits to interpret your text`
-              : 'Select a spirit to interpret your text'}
-          </p>
-          
-          {/* Selection Progress */}
-          {multiSelect && selectedSpirits.length > 0 && (
-            <div className="mt-4">
-              <div className="flex items-center justify-center gap-4">
-                <progress 
-                  className="progress progress-primary w-64" 
-                  value={selectedSpirits.length} 
-                  max={maxSelections}
-                ></progress>
-                <div className="badge badge-primary badge-lg">
-                  {selectedSpirits.length} / {maxSelections}
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+      {/* Header */}
+      <div className="text-center">
+        <h2 className="text-3xl font-bold text-ink font-underdog mb-2">
+          👻 Choose Your Spirits
+        </h2>
+        <p className="text-gray-400">
+          {multiSelect
+            ? `Select up to ${maxSelections} spirits to interpret your text`
+            : 'Select a spirit to interpret your text'}
+        </p>
+        
+        {/* Selection counter */}
+        {multiSelect && selectedSpirits.length > 0 && (
+          <div className="mt-3">
+            <span
+              className={`
+                inline-block px-4 py-2 rounded-full font-semibold
+                ${
+                  selectedSpirits.length >= maxSelections
+                    ? 'bg-spooky-orange text-parchment-50'
+                    : 'bg-spooky-orange text-parchment-50'
+                }
+              `}
+            >
+              {selectedSpirits.length} / {maxSelections} spirits selected
+            </span>
+          </div>
+        )}
       </div>
 
-      {/* Category Filter */}
+      {/* Category filter */}
       <SpiritFilter
         selectedCategory={selectedCategory}
         onCategoryChange={handleCategoryChange}
@@ -96,7 +108,7 @@ const SpiritGallery = ({
         disabled={disabled}
       />
 
-      {/* Spirit Grid */}
+      {/* Spirit grid */}
       <div 
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
         role="group"
@@ -113,47 +125,44 @@ const SpiritGallery = ({
         ))}
       </div>
 
-      {/* No Results */}
+      {/* No results message */}
       {filteredSpirits.length === 0 && (
-        <div className="alert alert-warning">
-          <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-          </svg>
-          <span>👻 No spirits found in this category</span>
+        <div className="text-center py-12" role="status" aria-live="polite">
+          <p className="text-gray-500 text-lg">
+            <span aria-hidden="true">👻</span> No spirits found in this category
+          </p>
         </div>
       )}
 
-      {/* Selected Spirits Summary */}
+      {/* Selected spirits summary */}
       {selectedSpirits.length > 0 && (
-        <div className="card bg-primary text-primary-content shadow-xl">
-          <div className="card-body">
-            <h3 className="card-title">
-              ✨ Selected Spirits ({selectedSpirits.length})
-            </h3>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {selectedSpirits.map((spiritId) => {
-                const spirit = spirits.find((s) => s.id === spiritId);
-                if (!spirit) return null;
+        <div className="mt-8 p-6 bg-parchment-50 border-2 border-ink parchment-texture">
+          <h3 className="text-xl font-semibold text-ink font-handwritten mb-4">
+            ✨ Selected Spirits
+          </h3>
+          <div className="flex flex-wrap gap-3">
+            {selectedSpirits.map((spiritId) => {
+              const spirit = spirits.find((s) => s.id === spiritId);
+              if (!spirit) return null;
 
-                return (
-                  <div
-                    key={spiritId}
-                    className="badge badge-lg gap-2 bg-primary-content text-primary"
+              return (
+                <div
+                  key={spiritId}
+                  className="flex items-center gap-2 px-4 py-2 bg-spooky-orange border-2 border-ink"
+                >
+                  <span className="text-2xl">{spirit.icon}</span>
+                  <span className="text-white font-semibold">{spirit.name}</span>
+                  <button
+                    onClick={() => handleSpiritClick(spiritId)}
+                    disabled={disabled}
+                    className="ml-2 text-red-400 hover:text-red-300 transition-colors"
+                    aria-label={`Remove ${spirit.name} from selection`}
                   >
-                    <span className="text-xl">{spirit.icon}</span>
-                    <span className="font-semibold">{spirit.name}</span>
-                    <button
-                      onClick={() => handleSpiritClick(spiritId)}
-                      disabled={disabled}
-                      className="btn btn-xs btn-circle btn-ghost"
-                      aria-label={`Remove ${spirit.name} from selection`}
-                    >
-                      <span aria-hidden="true">✕</span>
-                    </button>
-                  </div>
-                );
-              })}
-            </div>
+                    <span aria-hidden="true">✕</span>
+                  </button>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}

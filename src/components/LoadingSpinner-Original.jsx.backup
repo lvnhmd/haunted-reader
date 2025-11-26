@@ -1,13 +1,13 @@
 /**
- * LoadingSpinner - DaisyUI redesigned loading animation
+ * LoadingSpinner - Spooky loading animation
  * Shows while async operations are in progress
  */
 
 const LoadingSpinner = ({ message = 'Summoning spirits...', size = 'md', fullScreen = false }) => {
   const sizeClasses = {
-    sm: 'loading-sm',
-    md: 'loading-md',
-    lg: 'loading-lg'
+    sm: 'w-8 h-8',
+    md: 'w-16 h-16',
+    lg: 'w-24 h-24'
   };
 
   const textSizeClasses = {
@@ -18,12 +18,16 @@ const LoadingSpinner = ({ message = 'Summoning spirits...', size = 'md', fullScr
 
   const spinner = (
     <div className="flex flex-col items-center justify-center gap-4" role="status" aria-live="polite">
-      {/* DaisyUI Loading Spinner */}
-      <span className={`loading loading-infinity ${sizeClasses[size]} text-primary`}></span>
+      {/* Spinning ghost animation */}
+      <div className={`${sizeClasses[size]} relative`} aria-hidden="true">
+        <div className="absolute inset-0 animate-spin">
+          <div className="text-6xl">👻</div>
+        </div>
+      </div>
 
       {/* Loading message */}
       {message && (
-        <p className={`text-base-content font-handwritten ${textSizeClasses[size]} animate-pulse`}>
+        <p className={`text-ink font-handwritten ${textSizeClasses[size]} animate-pulse`}>
           {message}
         </p>
       )}
@@ -33,20 +37,18 @@ const LoadingSpinner = ({ message = 'Summoning spirits...', size = 'md', fullScr
 
       {/* Floating dots */}
       <div className="flex gap-2" aria-hidden="true">
-        <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-        <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-        <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+        <div className="w-2 h-2 bg-spooky-orange animate-bounce" style={{ animationDelay: '0ms' }}></div>
+        <div className="w-2 h-2 bg-spooky-orange animate-bounce" style={{ animationDelay: '150ms' }}></div>
+        <div className="w-2 h-2 bg-spooky-orange animate-bounce" style={{ animationDelay: '300ms' }}></div>
       </div>
     </div>
   );
 
   if (fullScreen) {
     return (
-      <div className="fixed inset-0 bg-base-100/90 flex items-center justify-center z-50">
-        <div className="card bg-base-200 shadow-xl">
-          <div className="card-body">
-            {spinner}
-          </div>
+      <div className="fixed inset-0 bg-parchment-100/90 flex items-center justify-center z-50">
+        <div className="bg-parchment-50 border-4 border-ink p-8 parchment-texture">
+          {spinner}
         </div>
       </div>
     );
@@ -61,9 +63,9 @@ const LoadingSpinner = ({ message = 'Summoning spirits...', size = 'md', fullScr
 export const InlineLoader = ({ message }) => {
   return (
     <div className="flex items-center gap-2" role="status" aria-live="polite">
-      <span className="loading loading-spinner loading-sm text-primary" aria-hidden="true"></span>
+      <div className="animate-spin text-2xl" aria-hidden="true">👻</div>
       {message && (
-        <span className="text-sm text-base-content/70">{message}</span>
+        <span className="text-sm text-ink-lighter font-book">{message}</span>
       )}
       <span className="sr-only">{message || 'Loading'}</span>
     </div>
@@ -79,7 +81,7 @@ export const SkeletonLoader = ({ lines = 3, className = '' }) => {
       {Array.from({ length: lines }).map((_, i) => (
         <div
           key={i}
-          className="skeleton h-4"
+          className="h-4 bg-parchment-200 animate-pulse"
           style={{ width: `${Math.random() * 30 + 70}%` }}
           aria-hidden="true"
         ></div>

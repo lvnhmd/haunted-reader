@@ -7,10 +7,10 @@ import useExport from './hooks/useExport';
 import useToast from './hooks/useToast';
 
 // Components
-import TextUploader from './components/TextUploader-DaisyUI';
-import SpiritGallery from './components/SpiritGallery-DaisyUI';
-import InterpretationViewer from './components/InterpretationViewer-DaisyUI';
-import SpectralTimeline from './components/SpectralTimeline-DaisyUI';
+import TextUploader from './components/TextUploader';
+import SpiritGallery from './components/SpiritGallery';
+import InterpretationViewer from './components/InterpretationViewer';
+import SpectralTimeline from './components/SpectralTimeline';
 import ErrorBoundary from './components/ErrorBoundary';
 import { ToastContainer } from './components/Toast';
 
@@ -30,7 +30,7 @@ function AppContent() {
   const { uploadFile, parseText } = useFileUpload();
   const { generateMultiple, regenerate } = useGenerateInterpretations();
   const { exportSingle, exportAll } = useExport();
-  const { toasts, removeToast } = useToast();
+  const toast = useToast();
 
   const handleTextParsed = async (result) => {
     if (result) {
@@ -316,7 +316,7 @@ function AppContent() {
         </div>
       </footer>
 
-      <ToastContainer toasts={toasts} removeToast={removeToast} />
+      <ToastContainer />
     </div>
   );
 }

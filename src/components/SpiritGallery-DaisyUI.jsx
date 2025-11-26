@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
-import SpiritCard from './SpiritCard';
-import SpiritFilter from './SpiritFilter';
+import SpiritCard from './SpiritCard-DaisyUI';
+import SpiritFilter from './SpiritFilter-DaisyUI';
 import { spirits, getCategories } from '../spirits/spiritDefinitions';
 import { announceToScreenReader } from '../utils/accessibility';
 
