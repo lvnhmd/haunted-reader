@@ -4,9 +4,8 @@
 
 import * as pdfjsLib from 'pdfjs-dist';
 
-// Configure PDF.js worker
-// In production, this should point to the worker file in your build
-pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+// Configure PDF.js worker - use unpkg CDN with HTTPS
+pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.js`;
 
 /**
  * Parse a PDF file and extract text content
