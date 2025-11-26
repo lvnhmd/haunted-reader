@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import InterpretationPanel from './InterpretationPanel-DaisyUI';
 import ComparisonView from './ComparisonView-DaisyUI';
+import SpectralTimeline from './SpectralTimeline-DaisyUI';
 
 /**
  * InterpretationViewer - DaisyUI redesigned viewer for displaying interpretations
@@ -16,6 +17,7 @@ const InterpretationViewer = ({
 }) => {
   const [viewMode, setViewMode] = useState('comparison');
   const [selectedInterpretationIndex, setSelectedInterpretationIndex] = useState(0);
+  const [showTimeline, setShowTimeline] = useState(false);
 
   const hasInterpretations = interpretations.length > 0 || loadingSpirits.length > 0;
 
@@ -41,25 +43,38 @@ const InterpretationViewer = ({
             </div>
 
             {/* View Mode Tabs */}
-            <div className="tabs tabs-boxed">
-              <a 
-                className={`tab ${viewMode === 'original' ? 'tab-active' : ''}`}
-                onClick={() => setViewMode('original')}
-              >
-                📄 Original
-              </a>
-              <a 
-                className={`tab ${viewMode === 'single' ? 'tab-active' : ''} ${!hasInterpretations ? 'tab-disabled' : ''}`}
-                onClick={() => hasInterpretations && setViewMode('single')}
-              >
-                👁️ Single
-              </a>
-              <a 
-                className={`tab ${viewMode === 'comparison' ? 'tab-active' : ''} ${!hasInterpretations ? 'tab-disabled' : ''}`}
-                onClick={() => hasInterpretations && setViewMode('comparison')}
-              >
-                📊 Compare
-              </a>
+            <div className="flex gap-2">
+              <div className="tabs tabs-boxed">
+                <a 
+                  className={`tab ${viewMode === 'original' ? 'tab-active' : ''}`}
+                  onClick={() => setViewMode('original')}
+                >
+                  📄 Original
+                </a>
+                <a 
+                  className={`tab ${viewMode === 'single' ? 'tab-active' : ''} ${!hasInterpretations ? 'tab-disabled' : ''}`}
+                  onClick={() => hasInterpretations && setViewMode('single')}
+                >
+                  👁️ Single
+                </a>
+                <a 
+                  className={`tab ${viewMode === 'comparison' ? 'tab-active' : ''} ${!hasInterpretations ? 'tab-disabled' : ''}`}
+                  onClick={() => hasInterpretations && setViewMode('comparison')}
+                >
+                  📊 Compare
+                </a>
+              </div>
+              
+              {/* Timeline Toggle */}
+              {originalText && (
+                <button
+                  onClick={() => setShowTimeline(!showTimeline)}
+                  className={`btn btn-sm ${showTimeline ? 'btn-primary' : 'btn-outline'}`}
+                  title="Toggle emotional timeline"
+                >
+                  📊 Timeline
+                </button>
+              )}
             </div>
           </div>
 
@@ -79,6 +94,24 @@ const InterpretationViewer = ({
           )}
         </div>
       </div>
+
+      {/* Timeline Section - Collapsible */}
+      {showTimeline && originalText && (
+        <div className="collapse collapse-open bg-base-200 shadow-xl">
+          <div className="collapse-title text-xl font-medium flex items-center justify-between">
+            <span>📊 Emotional Timeline</span>
+            <button
+              onClick={() => setShowTimeline(false)}
+              className="btn btn-ghost btn-sm btn-circle"
+            >
+              ✕
+            </button>
+          </div>
+          <div className="collapse-content">
+            <SpectralTimeline text={originalText} />
+          </div>
+        </div>
+      )}
 
       {/* Content Area */}
       <div className="min-h-[400px]">

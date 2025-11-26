@@ -10,7 +10,6 @@ import useToast from './hooks/useToast';
 import TextUploader from './components/TextUploader-DaisyUI';
 import SpiritGallery from './components/SpiritGallery-DaisyUI';
 import InterpretationViewer from './components/InterpretationViewer-DaisyUI';
-import SpectralTimeline from './components/SpectralTimeline-DaisyUI';
 import ErrorBoundary from './components/ErrorBoundary';
 import { ToastContainer } from './components/Toast';
 
@@ -49,13 +48,8 @@ function AppContent() {
     setActiveView('interpretations');
   };
 
-  const handleTimelineSectionClick = (sectionIndex) => {
-    console.log('Timeline section clicked:', sectionIndex);
-  };
-
   const showSpirits = parsedText && activeView === 'spirits';
   const showInterpretations = interpretations.length > 0 && activeView === 'interpretations';
-  const showTimeline = parsedText && activeView === 'timeline';
 
   return (
     <div className="min-h-screen bg-base-100" data-theme="haunted">
@@ -75,7 +69,6 @@ function AppContent() {
                 {interpretations.length > 0 && (
                   <li><a onClick={() => setActiveView('interpretations')}>📖 Interpretations</a></li>
                 )}
-                <li><a onClick={() => setActiveView('timeline')}>📊 Timeline</a></li>
               </ul>
             )}
           </div>
@@ -113,14 +106,6 @@ function AppContent() {
                   </a>
                 </li>
               )}
-              <li>
-                <a 
-                  className={activeView === 'timeline' ? 'active' : ''}
-                  onClick={() => setActiveView('timeline')}
-                >
-                  📊 Timeline
-                </a>
-              </li>
             </ul>
           </div>
         )}
@@ -253,16 +238,6 @@ function AppContent() {
               onExport={exportSingle}
               onRegenerate={regenerate}
               onExportAll={exportAll}
-            />
-          </div>
-        )}
-
-        {/* Timeline View */}
-        {showTimeline && (
-          <div className="max-w-6xl mx-auto">
-            <SpectralTimeline
-              text={parsedText.content}
-              onSectionClick={handleTimelineSectionClick}
             />
           </div>
         )}
