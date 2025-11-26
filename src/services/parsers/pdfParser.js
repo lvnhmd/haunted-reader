@@ -4,8 +4,8 @@
 
 import * as pdfjsLib from 'pdfjs-dist';
 
-// Configure PDF.js worker - use unpkg CDN with HTTPS
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.js`;
+// Configure PDF.js worker - use local worker file from public directory
+pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf-worker/pdf.worker.min.mjs';
 
 /**
  * Parse a PDF file and extract text content
