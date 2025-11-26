@@ -11,10 +11,6 @@
   line-height: 1.6;
   font-weight: 400;
 
-  color-scheme: light;
-  color: #1a1614;
-  background-color: #f8f4e8;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -25,7 +21,6 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: linear-gradient(135deg, #fdfbf7 0%, #f0e8d3 100%);
 }
 
 /* Accessibility: Screen reader only content */
