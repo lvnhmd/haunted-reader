@@ -52,7 +52,7 @@ function AppContent() {
   const showInterpretations = interpretations.length > 0 && activeView === 'interpretations';
 
   return (
-    <div className="min-h-screen bg-base-100" data-theme="halloween">
+    <div className="min-h-screen bg-base-100" data-theme="dracula">
       {/* DaisyUI Navbar */}
       <div className="navbar bg-base-200 shadow-lg sticky top-0 z-50">
         <div className="navbar-start">
