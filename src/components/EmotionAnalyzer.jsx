@@ -177,15 +177,33 @@ export function analyzeTextEmotions(text) {
  * @returns {string} The emotion with the highest score
  */
 export function getDominantEmotion(emotions) {
+  // Preference order for tie-breaking (neutral/positive emotions first)
+  const preferenceOrder = ['joy', 'mystery', 'tension', 'sadness', 'fear'];
+  
   let maxEmotion = 'mystery';
   let maxScore = 0;
 
+  // Find the highest score
   Object.entries(emotions).forEach(([emotion, score]) => {
     if (score > maxScore) {
       maxScore = score;
       maxEmotion = emotion;
     }
   });
+
+  // If there are ties, prefer emotions higher in the preference order
+  const tiedEmotions = Object.entries(emotions)
+    .filter(([, score]) => score === maxScore)
+    .map(([emotion]) => emotion);
+
+  if (tiedEmotions.length > 1) {
+    // Return the emotion that appears first in preference order
+    for (const preferred of preferenceOrder) {
+      if (tiedEmotions.includes(preferred)) {
+        return preferred;
+      }
+    }
+  }
 
   return maxEmotion;
 }
