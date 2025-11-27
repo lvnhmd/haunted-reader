@@ -52,81 +52,42 @@ function AppContent() {
   const showInterpretations = interpretations.length > 0 && activeView === 'interpretations';
 
   return (
-    <div className="min-h-screen bg-base-100" data-theme="dracula">
-      {/* DaisyUI Navbar */}
-      <div className="navbar bg-base-200 shadow-lg sticky top-0 z-50">
-        <div className="navbar-start">
-          <div className="dropdown">
-            <label tabIndex={0} className="btn btn-ghost lg:hidden">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
-              </svg>
-            </label>
-            {parsedText && (
-              <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                <li><a onClick={() => setActiveView('upload')}>📄 Upload</a></li>
-                <li><a onClick={() => setActiveView('spirits')}>👻 Spirits</a></li>
-                {interpretations.length > 0 && (
-                  <li><a onClick={() => setActiveView('interpretations')}>📖 Interpretations</a></li>
-                )}
-              </ul>
-            )}
-          </div>
-          <a className="btn btn-ghost normal-case text-xl font-underdog">
+    <div className="h-screen flex flex-col overflow-hidden bg-base-100" data-theme="dracula">
+      {/* Compact Header */}
+      <div className="navbar bg-base-200 shadow-lg z-50 min-h-[4rem]">
+        <div className="flex-1 flex items-center gap-2">
+          <a className="btn btn-ghost normal-case text-lg">
             👻 The Haunted Reader
           </a>
+          
+          {parsedText && (
+            <div className="tabs tabs-boxed">
+              <a 
+                className={`tab tab-sm ${activeView === 'upload' ? 'tab-active' : ''}`}
+                onClick={() => setActiveView('upload')}
+              >
+                📄 Upload
+              </a>
+              <a 
+                className={`tab tab-sm ${activeView === 'spirits' ? 'tab-active' : ''}`}
+                onClick={() => setActiveView('spirits')}
+              >
+                👻 Spirits
+              </a>
+              {interpretations.length > 0 && (
+                <a 
+                  className={`tab tab-sm ${activeView === 'interpretations' ? 'tab-active' : ''}`}
+                  onClick={() => setActiveView('interpretations')}
+                >
+                  📖 Interpretations
+                </a>
+              )}
+            </div>
+          )}
         </div>
         
-        {parsedText && (
-          <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1">
-              <li>
-                <a 
-                  className={activeView === 'upload' ? 'active' : ''}
-                  onClick={() => setActiveView('upload')}
-                >
-                  📄 Upload
-                </a>
-              </li>
-              <li>
-                <a 
-                  className={activeView === 'spirits' ? 'active' : ''}
-                  onClick={() => setActiveView('spirits')}
-                >
-                  👻 Spirits
-                </a>
-              </li>
-              {interpretations.length > 0 && (
-                <li>
-                  <a 
-                    className={activeView === 'interpretations' ? 'active' : ''}
-                    onClick={() => setActiveView('interpretations')}
-                  >
-                    📖 Interpretations
-                  </a>
-                </li>
-              )}
-            </ul>
-          </div>
-        )}
-        
-        <div className="navbar-end">
-          <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost btn-circle">
-              <div className="indicator">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-            </label>
-            <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow">
-              <div className="card-body">
-                <span className="font-bold text-lg">About</span>
-                <span className="text-sm">Kiroween Hackathon 2025</span>
-                <span className="text-xs">Built with Kiro & AWS Bedrock</span>
-              </div>
-            </div>
-          </div>
+        <div className="flex-none">
+          <div className="badge badge-ghost">Kiroween 2025</div>
         </div>
       </div>
 
@@ -146,69 +107,74 @@ function AppContent() {
         </div>
       )}
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
+      {/* Main Content - Full Height */}
+      <main className="flex-1 overflow-auto">
+        <div className="h-full">
         {/* Upload View */}
         {activeView === 'upload' && (
-          <div className="max-w-4xl mx-auto space-y-8">
-            <TextUploader
-              onTextParsed={handleTextParsed}
-              onError={(err) => console.error(err)}
-            />
-            
-            {parsedText && (
-              <div className="card bg-base-200 shadow-xl">
-                <div className="card-body">
-                  <h2 className="card-title text-success">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Text Loaded Successfully
-                  </h2>
-                  <div className="stats stats-vertical lg:stats-horizontal shadow">
-                    <div className="stat">
-                      <div className="stat-title">Words</div>
-                      <div className="stat-value text-primary">{parsedText.metadata.wordCount.toLocaleString()}</div>
+          <div className="h-full flex items-center justify-center p-8">
+            <div className="w-full max-w-2xl">
+              <TextUploader
+                onTextParsed={handleTextParsed}
+                onError={(err) => console.error(err)}
+              />
+              
+              {parsedText && (
+                <div className="card bg-base-200 shadow-xl mt-8">
+                  <div className="card-body">
+                    <h2 className="card-title text-success">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      Text Loaded Successfully
+                    </h2>
+                    <div className="stats stats-vertical lg:stats-horizontal shadow">
+                      <div className="stat">
+                        <div className="stat-title">Words</div>
+                        <div className="stat-value text-primary">{parsedText.metadata.wordCount.toLocaleString()}</div>
+                      </div>
+                      <div className="stat">
+                        <div className="stat-title">Characters</div>
+                        <div className="stat-value text-secondary">{parsedText.metadata.characterCount.toLocaleString()}</div>
+                      </div>
+                      <div className="stat">
+                        <div className="stat-title">Read Time</div>
+                        <div className="stat-value text-accent">{parsedText.metadata.estimatedReadTime} min</div>
+                      </div>
+                      <div className="stat">
+                        <div className="stat-title">Paragraphs</div>
+                        <div className="stat-value">{parsedText.structure?.paragraphs?.length || 0}</div>
+                      </div>
                     </div>
-                    <div className="stat">
-                      <div className="stat-title">Characters</div>
-                      <div className="stat-value text-secondary">{parsedText.metadata.characterCount.toLocaleString()}</div>
+                    <div className="card-actions justify-end">
+                      <button 
+                        className="btn btn-primary"
+                        onClick={() => setActiveView('spirits')}
+                      >
+                        Select Spirits →
+                      </button>
                     </div>
-                    <div className="stat">
-                      <div className="stat-title">Read Time</div>
-                      <div className="stat-value text-accent">{parsedText.metadata.estimatedReadTime} min</div>
-                    </div>
-                    <div className="stat">
-                      <div className="stat-title">Paragraphs</div>
-                      <div className="stat-value">{parsedText.structure?.paragraphs?.length || 0}</div>
-                    </div>
-                  </div>
-                  <div className="card-actions justify-end">
-                    <button 
-                      className="btn btn-primary"
-                      onClick={() => setActiveView('spirits')}
-                    >
-                      Select Spirits →
-                    </button>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         )}
 
         {/* Spirits View */}
         {showSpirits && (
-          <div className="max-w-7xl mx-auto space-y-8">
-            <SpiritGallery
-              onSpiritSelect={handleSpiritSelect}
-              selectedSpirits={selectedSpirits}
-              multiSelect={true}
-              maxSelections={5}
-            />
+          <div className="h-full flex flex-col p-8">
+            <div className="flex-1 overflow-auto">
+              <SpiritGallery
+                onSpiritSelect={handleSpiritSelect}
+                selectedSpirits={selectedSpirits}
+                multiSelect={true}
+                maxSelections={5}
+              />
+            </div>
             
             {selectedSpirits.length > 0 && (
-              <div className="flex justify-center">
+              <div className="flex-none pt-4 flex justify-center">
                 <button
                   className="btn btn-success btn-lg"
                   onClick={handleGenerateInterpretations}
@@ -230,7 +196,7 @@ function AppContent() {
 
         {/* Interpretations View */}
         {showInterpretations && (
-          <div className="max-w-7xl mx-auto">
+          <div className="h-full p-8">
             <InterpretationViewer
               originalText={parsedText?.content || ''}
               interpretations={interpretations}
@@ -244,9 +210,8 @@ function AppContent() {
 
         {/* Empty State - Hero */}
         {!parsedText && activeView === 'upload' && (
-          <div className="hero min-h-[60vh]">
-            <div className="hero-content text-center">
-              <div className="max-w-md">
+          <div className="h-full flex items-center justify-center">
+            <div className="text-center max-w-4xl px-8">
                 <h1 className="text-5xl font-bold font-underdog">👻 Welcome</h1>
                 <p className="py-6 text-lg">
                   Upload your text and let the spirits interpret it through their unique perspectives
@@ -276,20 +241,9 @@ function AppContent() {
                 </div>
               </div>
             </div>
-          </div>
         )}
-      </main>
-
-      {/* Footer */}
-      <footer className="footer footer-center p-10 bg-base-200 text-base-content">
-        <div>
-          <p className="font-bold font-underdog">
-            👻 The Haunted Reader
-          </p>
-          <p>Kiroween Hackathon 2025</p>
-          <p className="text-sm">Built with React, Vite, Tailwind CSS, DaisyUI, and Amazon Bedrock</p>
         </div>
-      </footer>
+      </main>
 
       <ToastContainer toasts={toasts} removeToast={removeToast} />
     </div>
