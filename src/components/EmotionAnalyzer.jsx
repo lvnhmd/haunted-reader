@@ -198,14 +198,14 @@ export function getDominantEmotion(emotions) {
  */
 export function getEmotionColor(emotion) {
   const colors = {
-    fear: 'bg-red-600',      // Red for fear
-    joy: 'bg-yellow-500',    // Yellow for joy
-    tension: 'bg-orange-600', // Orange for tension
-    sadness: 'bg-blue-600',  // Blue for sadness
-    mystery: 'bg-purple-600' // Purple for mystery
+    fear: 'bg-error',        // DaisyUI error color for fear
+    joy: 'bg-warning',       // DaisyUI warning color for joy
+    tension: 'bg-primary',   // DaisyUI primary color for tension
+    sadness: 'bg-info',      // DaisyUI info color for sadness
+    mystery: 'bg-secondary'  // DaisyUI secondary color for mystery
   };
 
-  return colors[emotion] || 'bg-gray-600';
+  return colors[emotion] || 'bg-neutral';
 }
 
 /**

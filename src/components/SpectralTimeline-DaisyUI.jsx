@@ -51,44 +51,33 @@ const SpectralTimeline = ({ text, onSectionClick }) => {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header with Legend */}
-      <div className="card bg-base-200 shadow-xl">
-        <div className="card-body">
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <h2 className="card-title text-2xl mb-2">
-                👻 Spectral Timeline
-              </h2>
-              <p className="text-sm opacity-70">
-                Emotional flow across {emotionData.length} sections • Hover for details, click to select
-              </p>
+    <div className="space-y-4">
+      {/* Compact Header */}
+      <div>
+        <p className="text-xs opacity-70 mb-2">
+          {emotionData.length} sections • Hover for details
+        </p>
+        
+        {/* Legend - Compact */}
+        <div className="flex flex-wrap gap-1 mb-3" role="group" aria-label="Emotion color legend">
+          {['fear', 'joy', 'tension', 'sadness', 'mystery'].map((emotion) => (
+            <div key={emotion} className="badge badge-xs badge-outline gap-1">
+              <div
+                className={`w-2 h-2 rounded-full ${getEmotionColor(emotion)}`}
+                role="img"
+                aria-label={`${emotion} color indicator`}
+              />
+              <span className="capitalize text-xs">{emotion}</span>
             </div>
-          </div>
-          
-          {/* Legend - Compact */}
-          <div className="flex flex-wrap gap-2" role="group" aria-label="Emotion color legend">
-            {['fear', 'joy', 'tension', 'sadness', 'mystery'].map((emotion) => (
-              <div key={emotion} className="badge badge-outline gap-2">
-                <div
-                  className={`w-3 h-3 rounded-full ${getEmotionColor(emotion)}`}
-                  role="img"
-                  aria-label={`${emotion} color indicator`}
-                />
-                <span className="capitalize text-xs">{emotion}</span>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
 
-      {/* Timeline Visualization */}
-      <div className="card bg-base-200 shadow-xl">
-        <div className="card-body p-4">
-          <h3 className="text-sm font-semibold opacity-70 mb-3 uppercase">Timeline</h3>
+      {/* Timeline Bars */}
+      <div>
 
-          {/* Timeline bars */}
-          <div className="space-y-2" role="group" aria-label="Emotional timeline sections">
+        {/* Timeline bars */}
+        <div className="space-y-1" role="group" aria-label="Emotional timeline sections">
             {emotionData.map((section) => {
               const dominantEmotion = getDominantEmotion(section.emotions);
               const isHovered = hoveredSection === section.index;
@@ -103,14 +92,14 @@ const SpectralTimeline = ({ text, onSectionClick }) => {
                     onFocus={() => setHoveredSection(section.index)}
                     onBlur={() => setHoveredSection(null)}
                     className={`
-                      w-full h-8 rounded border border-base-content/10
+                      w-full h-6 rounded border border-base-content/10
                       flex items-center justify-start px-2
                       ${getEmotionColor(dominantEmotion)}
                       ${isHovered ? 'scale-[1.02] shadow-md brightness-110' : ''}
-                      ${isSelected ? 'ring-2 ring-primary scale-[1.02]' : ''}
+                      ${isSelected ? 'ring-2 ring-accent scale-[1.02]' : ''}
                       transition-all duration-150 cursor-pointer
                       hover:scale-[1.02] hover:shadow-md hover:brightness-110
-                      focus:outline-none focus:ring-2 focus:ring-primary
+                      focus:outline-none focus:ring-2 focus:ring-accent
                     `}
                     aria-label={`Section ${section.index + 1} of ${emotionData.length}. Dominant emotion: ${dominantEmotion}`}
                     aria-pressed={isSelected}
@@ -164,55 +153,40 @@ const SpectralTimeline = ({ text, onSectionClick }) => {
           </div>
 
         </div>
-      </div>
 
-      {/* Selected section details */}
+      {/* Selected section details - Compact */}
       {selectedSection !== null && emotionData[selectedSection] && (
-        <div className="card bg-primary/10 border-2 border-primary shadow-xl">
-          <div className="card-body">
-            <div className="flex items-start justify-between mb-4">
-              <h3 className="card-title text-lg">
-                📍 Section {selectedSection + 1} Details
-              </h3>
+        <div className="alert alert-info mt-4">
+          <div className="w-full">
+            <div className="flex items-start justify-between mb-2">
+              <h4 className="font-bold text-sm">
+                📍 Section {selectedSection + 1}
+              </h4>
               <button
                 onClick={() => setSelectedSection(null)}
-                className="btn btn-ghost btn-sm btn-circle"
+                className="btn btn-ghost btn-xs btn-circle"
               >
                 ✕
               </button>
             </div>
             
-            <div className="space-y-4">
+            <div className="space-y-2">
               <div>
-                <p className="text-sm font-semibold opacity-70 mb-2">Emotion Breakdown:</p>
-                <p className="text-sm">{formatEmotionScores(emotionData[selectedSection].emotions)}</p>
+                <p className="text-xs opacity-70 mb-1">Emotions:</p>
+                <p className="text-xs">{formatEmotionScores(emotionData[selectedSection].emotions)}</p>
               </div>
 
               <div>
-                <p className="text-sm font-semibold opacity-70 mb-2">Text Preview:</p>
-                <p className="text-sm italic opacity-90">
-                  {emotionData[selectedSection].text.substring(0, 200)}
-                  {emotionData[selectedSection].text.length > 200 ? '...' : ''}
+                <p className="text-xs opacity-70 mb-1">Preview:</p>
+                <p className="text-xs italic opacity-90">
+                  {emotionData[selectedSection].text.substring(0, 150)}
+                  {emotionData[selectedSection].text.length > 150 ? '...' : ''}
                 </p>
               </div>
             </div>
           </div>
         </div>
       )}
-
-      {/* Help Card */}
-      <div className="card bg-base-300 shadow-xl">
-        <div className="card-body">
-          <h4 className="card-title text-sm">💡 Timeline Tips</h4>
-          <ul className="text-sm space-y-1 opacity-70">
-            <li>• Each bar represents a section of your text</li>
-            <li>• Colors show the dominant emotion in that section</li>
-            <li>• Hover over a bar to see detailed emotion breakdown</li>
-            <li>• Click a bar to jump to that section in your text</li>
-            <li>• The timeline updates automatically when you change the text</li>
-          </ul>
-        </div>
-      </div>
     </div>
   );
 };

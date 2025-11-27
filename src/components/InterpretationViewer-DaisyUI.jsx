@@ -95,26 +95,30 @@ const InterpretationViewer = ({
         </div>
       </div>
 
-      {/* Timeline Section - Collapsible */}
-      {showTimeline && originalText && (
-        <div className="collapse collapse-open bg-base-200 shadow-xl">
-          <div className="collapse-title text-xl font-medium flex items-center justify-between">
-            <span>📊 Emotional Timeline</span>
-            <button
-              onClick={() => setShowTimeline(false)}
-              className="btn btn-ghost btn-sm btn-circle"
-            >
-              ✕
-            </button>
+      {/* Content Area with Timeline Sidebar */}
+      <div className="flex gap-4 min-h-[400px]">
+        {/* Timeline Sidebar */}
+        {showTimeline && originalText && (
+          <div className="w-80 flex-shrink-0">
+            <div className="card bg-base-200 shadow-xl sticky top-4 h-[calc(100vh-12rem)] overflow-hidden flex flex-col">
+              <div className="card-body p-4 flex-1 overflow-auto">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="card-title text-lg">📊 Timeline</h3>
+                  <button
+                    onClick={() => setShowTimeline(false)}
+                    className="btn btn-ghost btn-sm btn-circle"
+                  >
+                    ✕
+                  </button>
+                </div>
+                <SpectralTimeline text={originalText} />
+              </div>
+            </div>
           </div>
-          <div className="collapse-content">
-            <SpectralTimeline text={originalText} />
-          </div>
-        </div>
-      )}
+        )}
 
-      {/* Content Area */}
-      <div className="min-h-[400px]">
+        {/* Main Content */}
+        <div className="flex-1 min-w-0">
         {/* Original Text View */}
         {viewMode === 'original' && (
           <div className="card bg-base-200 shadow-xl">
@@ -214,19 +218,20 @@ const InterpretationViewer = ({
             maxComparisons={3}
           />
         )}
-      </div>
 
-      {/* Help Alert */}
-      {hasInterpretations && (
-        <div className="alert">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-info shrink-0 w-6 h-6">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          <div className="text-sm">
-            <p><strong>💡 Viewing Tips:</strong> Switch between Original, Single, and Compare views • Export individual or all interpretations • Regenerate any interpretation for a fresh take</p>
+        {/* Help Alert */}
+        {hasInterpretations && (
+          <div className="alert mt-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-info shrink-0 w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div className="text-sm">
+              <p><strong>💡 Viewing Tips:</strong> Switch between Original, Single, and Compare views • Export individual or all interpretations • Regenerate any interpretation for a fresh take</p>
+            </div>
           </div>
+        )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
