@@ -97,26 +97,6 @@ const InterpretationViewer = ({
 
       {/* Content Area with Timeline Sidebar */}
       <div className="flex gap-4 min-h-[400px]">
-        {/* Timeline Sidebar */}
-        {showTimeline && originalText && (
-          <div className="w-80 flex-shrink-0">
-            <div className="card bg-base-200 shadow-xl sticky top-4 h-[calc(100vh-12rem)] overflow-hidden flex flex-col">
-              <div className="card-body p-4 flex-1 overflow-auto">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="card-title text-lg">📊 Timeline</h3>
-                  <button
-                    onClick={() => setShowTimeline(false)}
-                    className="btn btn-ghost btn-sm btn-circle"
-                  >
-                    ✕
-                  </button>
-                </div>
-                <SpectralTimeline text={originalText} />
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Main Content */}
         <div className="flex-1 min-w-0">
         {/* Original Text View */}
@@ -231,6 +211,26 @@ const InterpretationViewer = ({
           </div>
         )}
         </div>
+
+        {/* Timeline Sidebar - Right Side */}
+        {showTimeline && originalText && (
+          <div className="w-80 flex-shrink-0">
+            <div className="card bg-base-200 shadow-xl sticky top-4 h-[calc(100vh-12rem)] overflow-hidden flex flex-col">
+              <div className="card-body p-4 flex-1 overflow-auto">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="card-title text-lg">📊 Timeline</h3>
+                  <button
+                    onClick={() => setShowTimeline(false)}
+                    className="btn btn-ghost btn-sm btn-circle"
+                  >
+                    ✕
+                  </button>
+                </div>
+                <SpectralTimeline text={originalText} />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
