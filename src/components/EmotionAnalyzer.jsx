@@ -199,8 +199,8 @@ export function getDominantEmotion(emotions) {
 export function getEmotionColor(emotion) {
   const colors = {
     fear: 'bg-error',        // DaisyUI error color for fear
-    joy: 'bg-warning',       // DaisyUI warning color for joy
-    tension: 'bg-primary',   // DaisyUI primary color for tension
+    joy: 'bg-primary',       // DaisyUI primary color for joy
+    tension: 'bg-warning',   // DaisyUI warning color for tension
     sadness: 'bg-info',      // DaisyUI info color for sadness
     mystery: 'bg-secondary'  // DaisyUI secondary color for mystery
   };
