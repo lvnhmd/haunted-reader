@@ -19,12 +19,13 @@ const EMOTION_KEYWORDS = {
     'happy', 'joy', 'delight', 'pleasure', 'laugh', 'smile', 'cheerful', 'merry',
     'glad', 'content', 'bliss', 'elated', 'jubilant', 'ecstatic', 'wonderful',
     'beautiful', 'love', 'hope', 'bright', 'light', 'warm', 'celebrate', 'merrily',
-    'dream', 'gentle', 'gently', 'sweet', 'peaceful', 'serene', 'calm'
+    'dream', 'gentle', 'gently', 'sweet', 'peaceful', 'serene', 'calm',
+    'welcome', 'excited', 'excitement', 'eager', 'wait', 'together', 'friend'
   ],
   tension: [
     'tense', 'anxious', 'nervous', 'worried', 'stress', 'pressure', 'urgent',
-    'hurry', 'rush', 'quick', 'fast', 'sudden', 'sharp', 'edge', 'wait', 'watch',
-    'careful', 'cautious', 'alert', 'ready', 'prepare', 'anticipate', 'expect'
+    'hurry', 'rush', 'sudden', 'sharp', 'edge', 'watch',
+    'careful', 'cautious', 'alert', 'ready', 'prepare'
   ],
   sadness: [
     'sad', 'sorrow', 'grief', 'mourn', 'cry', 'tears', 'weep', 'melancholy',
