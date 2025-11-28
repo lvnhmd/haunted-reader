@@ -73,111 +73,130 @@ const TextUploader = ({ onTextParsed, onError }) => {
 
   return (
     <div className="space-y-6">
-      {/* Header Card */}
+      {/* Main Upload Card - Everything in one section */}
       <div className="card bg-base-200 shadow-xl">
-        <div className="card-body text-center">
-          <h2 className="card-title text-3xl font-underdog justify-center">
-            📚 Summon Your Text
-          </h2>
-          <p className="text-base-content/70">
-            Upload a file or paste text to begin your haunted reading experience
-          </p>
-        </div>
-      </div>
+        <div className="card-body">
+          {/* Header */}
+          <div className="text-center mb-4">
+            <h3 className="card-title text-3xl font-underdog justify-center mb-2">
+              <span aria-hidden="true">📚</span> Summon Your Text
+            </h3>
+            <p className="text-base-content/70 text-sm">
+              Upload a file or paste text to begin your haunted reading experience
+            </p>
+          </div>
 
-      {/* DaisyUI Tabs */}
-      <div className="tabs tabs-boxed justify-center bg-base-200">
-        <a 
-          className={`tab tab-lg ${activeTab === 'file' ? 'tab-active' : ''}`}
-          onClick={() => !isProcessing && setActiveTab('file')}
-        >
-          📁 Upload File
-        </a>
-        <a 
-          className={`tab tab-lg ${activeTab === 'paste' ? 'tab-active' : ''}`}
-          onClick={() => !isProcessing && setActiveTab('paste')}
-        >
-          📝 Paste Text
-        </a>
-      </div>
-
-      {/* Progress Bar */}
-      {isProcessing && uploadProgress > 0 && (
-        <div className="card bg-base-200">
-          <div className="card-body">
-            <div className="flex items-center gap-4">
-              <span className="loading loading-spinner loading-lg text-primary"></span>
-              <div className="flex-1">
-                <progress 
-                  className="progress progress-primary w-full" 
-                  value={uploadProgress} 
-                  max="100"
-                ></progress>
-                <p className="text-sm text-center mt-2">
-                  {uploadProgress < 100 ? '👻 Summoning spirits...' : '✨ Almost there...'}
-                </p>
-              </div>
+          {/* Tabs - Proper spacing */}
+          <div className="flex justify-center mb-4">
+            <div className="tabs tabs-boxed gap-1" role="tablist" aria-label="Upload method">
+              <button 
+                role="tab"
+                aria-selected={activeTab === 'file'}
+                aria-controls="upload-content"
+                className={`tab ${activeTab === 'file' ? 'tab-active' : ''}`}
+                onClick={() => !isProcessing && setActiveTab('file')}
+                disabled={isProcessing}
+              >
+                <span aria-hidden="true">📁</span> <span>Upload File</span>
+              </button>
+              <button 
+                role="tab"
+                aria-selected={activeTab === 'paste'}
+                aria-controls="upload-content"
+                className={`tab ${activeTab === 'paste' ? 'tab-active' : ''}`}
+                onClick={() => !isProcessing && setActiveTab('paste')}
+                disabled={isProcessing}
+              >
+                <span aria-hidden="true">📝</span> <span>Paste Text</span>
+              </button>
             </div>
           </div>
-        </div>
-      )}
 
-      {/* Content Area */}
-      <div className="min-h-[300px]">
-        {activeTab === 'file' ? (
-          <FileDropzone
-            onFileSelect={handleFileSelect}
-            onError={handleError}
-            disabled={isProcessing}
-          />
-        ) : (
-          <TextInput
-            onTextSubmit={handleTextSubmit}
-            disabled={isProcessing}
-          />
-        )}
+          {/* Progress Bar */}
+          {isProcessing && uploadProgress > 0 && (
+            <div className="mb-4" role="status" aria-live="polite" aria-label="Upload progress">
+              <div className="flex items-center gap-4">
+                <span className="loading loading-spinner loading-lg text-primary" aria-hidden="true"></span>
+                <div className="flex-1">
+                  <progress 
+                    className="progress progress-primary w-full" 
+                    value={uploadProgress} 
+                    max="100"
+                    aria-label={`Upload progress: ${uploadProgress}%`}
+                  ></progress>
+                  <p className="text-sm text-center mt-2">
+                    {uploadProgress < 100 ? '👻 Summoning spirits...' : '✨ Almost there...'}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Content Area */}
+          <div id="upload-content" role="tabpanel" aria-label={`${activeTab === 'file' ? 'File upload' : 'Text input'} panel`}>
+            {activeTab === 'file' ? (
+              <FileDropzone
+                onFileSelect={handleFileSelect}
+                onError={handleError}
+                disabled={isProcessing}
+              />
+            ) : (
+              <TextInput
+                onTextSubmit={handleTextSubmit}
+                disabled={isProcessing}
+              />
+            )}
+          </div>
+
+          {/* Help text at bottom */}
+          <div className="text-center mt-4">
+            <p className="text-xs text-base-content/60">
+              <span aria-hidden="true">💀</span> Supports TXT, PDF, and EPUB files up to 10MB
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Parsed Text Preview - DaisyUI Card */}
       {parsedText && !isProcessing && (
-        <div className="card bg-success text-success-content shadow-xl">
+        <div className="card bg-success text-success-content shadow-xl" role="region" aria-label="Upload success summary">
           <div className="card-body">
             <div className="flex items-center justify-between">
-              <h3 className="card-title">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <h4 className="card-title">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 Text Summoned Successfully
-              </h3>
+              </h4>
               <button
                 onClick={() => {
                   setParsedText(null);
                   onTextParsed(null);
                 }}
                 className="btn btn-sm btn-circle btn-ghost"
-                title="Clear text"
+                aria-label="Clear uploaded text"
               >
                 ✕
               </button>
             </div>
 
             {/* Stats */}
-            <div className="stats stats-horizontal shadow bg-success-content text-success mt-4">
+            <div className="stats stats-horizontal shadow bg-success-content text-success mt-4" role="group" aria-label="Text statistics">
               <div className="stat place-items-center">
                 <div className="stat-title">Words</div>
-                <div className="stat-value text-2xl">
+                <div className="stat-value text-2xl" aria-label={`${parsedText.metadata.wordCount.toLocaleString()} words`}>
                   {parsedText.metadata.wordCount.toLocaleString()}
                 </div>
               </div>
               <div className="stat place-items-center">
                 <div className="stat-title">Characters</div>
-                <div className="stat-value text-2xl">
+                <div className="stat-value text-2xl" aria-label={`${parsedText.metadata.characterCount.toLocaleString()} characters`}>
                   {parsedText.metadata.characterCount.toLocaleString()}
                 </div>
               </div>
               <div className="stat place-items-center">
                 <div className="stat-title">Read Time</div>
-                <div className="stat-value text-2xl">
+                <div className="stat-value text-2xl" aria-label={`${parsedText.metadata.estimatedReadTime} minutes estimated read time`}>
                   {parsedText.metadata.estimatedReadTime} min
                 </div>
               </div>
@@ -201,13 +220,6 @@ const TextUploader = ({ onTextParsed, onError }) => {
         </div>
       )}
 
-      {/* Help Alert */}
-      <div className="alert">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-info shrink-0 w-6 h-6">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-        <span>💀 Supports TXT, PDF, and EPUB files up to 10MB</span>
-      </div>
     </div>
   );
 };

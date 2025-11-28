@@ -28,10 +28,10 @@ const InterpretationViewer = ({
         <div className="card-body">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h2 className="card-title text-3xl font-underdog">
-                👻 Spirit Interpretations
-              </h2>
-              <p className="text-base-content/70">
+              <h3 className="card-title text-3xl font-underdog">
+                <span aria-hidden="true">👻</span> Spirit Interpretations
+              </h3>
+              <p className="text-base-content/70" role="status" aria-live="polite">
                 {interpretations.length > 0
                   ? `${interpretations.length} interpretation${
                       interpretations.length !== 1 ? 's' : ''
@@ -43,38 +43,52 @@ const InterpretationViewer = ({
             </div>
 
             {/* View Mode Tabs */}
-            <div className="flex gap-2">
-              <div className="tabs tabs-boxed">
-                <a 
-                  className={`tab ${viewMode === 'original' ? 'tab-active' : ''}`}
+            <div className="flex gap-2 items-center">
+              <div className="tabs tabs-boxed gap-2" role="tablist" aria-label="Interpretation view modes">
+                <button 
+                  role="tab"
+                  aria-selected={viewMode === 'original'}
+                  aria-controls="interpretation-content"
+                  className={`tab gap-2 ${viewMode === 'original' ? 'tab-active' : ''}`}
                   onClick={() => setViewMode('original')}
                 >
-                  📄 Original
-                </a>
-                <a 
-                  className={`tab ${viewMode === 'single' ? 'tab-active' : ''} ${!hasInterpretations ? 'tab-disabled' : ''}`}
-                  onClick={() => hasInterpretations && setViewMode('single')}
-                >
-                  👁️ Single
-                </a>
-                <a 
-                  className={`tab ${viewMode === 'comparison' ? 'tab-active' : ''} ${!hasInterpretations ? 'tab-disabled' : ''}`}
-                  onClick={() => hasInterpretations && setViewMode('comparison')}
-                >
-                  📊 Compare
-                </a>
-              </div>
-              
-              {/* Timeline Toggle */}
-              {originalText && (
-                <button
-                  onClick={() => setShowTimeline(!showTimeline)}
-                  className={`btn btn-sm ${showTimeline ? 'btn-primary' : 'btn-outline'}`}
-                  title="Toggle emotional timeline"
-                >
-                  📊 Timeline
+                  <span aria-hidden="true">📄</span> <span>Original</span>
                 </button>
-              )}
+                <button 
+                  role="tab"
+                  aria-selected={viewMode === 'single'}
+                  aria-controls="interpretation-content"
+                  aria-disabled={!hasInterpretations}
+                  className={`tab gap-2 ${viewMode === 'single' ? 'tab-active' : ''} ${!hasInterpretations ? 'tab-disabled' : ''}`}
+                  onClick={() => hasInterpretations && setViewMode('single')}
+                  disabled={!hasInterpretations}
+                >
+                  <span aria-hidden="true">👁️</span> <span>Single</span>
+                </button>
+                <button 
+                  role="tab"
+                  aria-selected={viewMode === 'comparison'}
+                  aria-controls="interpretation-content"
+                  aria-disabled={!hasInterpretations}
+                  className={`tab gap-2 ${viewMode === 'comparison' ? 'tab-active' : ''} ${!hasInterpretations ? 'tab-disabled' : ''}`}
+                  onClick={() => hasInterpretations && setViewMode('comparison')}
+                  disabled={!hasInterpretations}
+                >
+                  <span aria-hidden="true">🔀</span> <span>Compare</span>
+                </button>
+                
+                {/* Timeline Toggle - inside tabs-boxed for consistent styling */}
+                {originalText && (
+                  <button
+                    onClick={() => setShowTimeline(!showTimeline)}
+                    className={`tab gap-2 ${showTimeline ? 'tab-active' : ''}`}
+                    aria-label={showTimeline ? 'Hide emotional timeline' : 'Show emotional timeline'}
+                    aria-pressed={showTimeline}
+                  >
+                    <span aria-hidden="true">📈</span> <span>Timeline</span>
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 
@@ -84,8 +98,9 @@ const InterpretationViewer = ({
               <button
                 onClick={onExportAll}
                 className="btn btn-success gap-2"
+                aria-label={`Export all ${interpretations.length} interpretations`}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
                 Export All Interpretations
@@ -96,35 +111,35 @@ const InterpretationViewer = ({
       </div>
 
       {/* Content Area with Timeline Sidebar */}
-      <div className="flex gap-4 min-h-[400px]">
+      <div className="flex gap-4 min-h-[400px]" id="interpretation-content">
         {/* Main Content */}
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0" role="tabpanel" aria-label={`${viewMode} view`}>
         {/* Original Text View */}
         {viewMode === 'original' && (
-          <div className="card bg-base-200 shadow-xl">
+          <article className="card bg-base-200 shadow-xl">
             <div className="card-body">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="card-title">📄 Original Text</h3>
+                <h4 className="card-title"><span aria-hidden="true">📄</span> Original Text</h4>
                 {originalText && (
-                  <div className="badge badge-neutral">
+                  <div className="badge badge-neutral" aria-label={`${originalText.split(/\s+/).length} words`}>
                     {originalText.split(/\s+/).length} words
                   </div>
                 )}
               </div>
               <div className="prose max-w-none">
                 {originalText ? (
-                  <div className="mockup-code max-h-[600px] overflow-y-auto">
+                  <div className="mockup-code max-h-[600px] overflow-y-auto" role="region" aria-label="Original text content">
                     <pre className="text-sm"><code>{originalText}</code></pre>
                   </div>
                 ) : (
-                  <div className="text-center py-12">
-                    <div className="text-6xl mb-4">📄</div>
+                  <div className="text-center py-12" role="status">
+                    <div className="text-6xl mb-4" aria-hidden="true">📄</div>
                     <p className="text-base-content/70">No text uploaded yet</p>
                   </div>
                 )}
               </div>
             </div>
-          </div>
+          </article>
         )}
 
         {/* Single Interpretation View */}

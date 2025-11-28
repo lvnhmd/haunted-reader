@@ -29,10 +29,10 @@ const TextInput = ({ onTextSubmit, disabled = false }) => {
   const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0;
 
   return (
-    <div className="space-y-4">
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="space-y-4 min-h-[400px] flex flex-col">
+      <form onSubmit={handleSubmit} className="space-y-4 flex-1 flex flex-col">
         {/* Textarea */}
-        <div className="form-control">
+        <div className="form-control flex-1">
           <label htmlFor="text-input" className="label">
             <span className="label-text">Paste your text here for spirit interpretation</span>
           </label>
@@ -43,7 +43,7 @@ const TextInput = ({ onTextSubmit, disabled = false }) => {
             onPaste={handlePaste}
             disabled={disabled}
             placeholder="Paste your text here... The spirits are listening..."
-            className="textarea textarea-bordered textarea-lg h-64 resize-none"
+            className="textarea textarea-bordered textarea-lg flex-1 resize-none"
             aria-describedby="text-input-help"
           />
         </div>
@@ -66,8 +66,7 @@ const TextInput = ({ onTextSubmit, disabled = false }) => {
             className="btn btn-warning gap-2"
             aria-label={disabled ? 'Processing text' : text.trim() ? 'Submit text for interpretation' : 'Enter text to submit'}
           >
-            <span aria-hidden="true">{disabled ? '⏳' : '🔮'}</span>
-            {disabled ? 'Processing...' : 'Summon Spirits'}
+            <span aria-hidden="true">{disabled ? '⏳' : '🔮'}</span> <span>{disabled ? 'Processing...' : 'Summon Spirits'}</span>
           </button>
         </div>
       </form>

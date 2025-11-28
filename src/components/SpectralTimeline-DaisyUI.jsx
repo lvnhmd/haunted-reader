@@ -58,12 +58,12 @@ const SpectralTimeline = ({ text, onSectionClick }) => {
           {emotionData.length} sections • Hover for details
         </p>
         
-        {/* Legend - Compact */}
-        <div className="flex flex-wrap gap-1 mb-3" role="group" aria-label="Emotion color legend">
+        {/* Legend - Two columns with spacing */}
+        <div className="grid grid-cols-2 gap-2 mb-4" role="group" aria-label="Emotion color legend">
           {['fear', 'joy', 'tension', 'sadness', 'mystery'].map((emotion) => (
-            <div key={emotion} className="badge badge-xs badge-outline gap-1">
+            <div key={emotion} className="badge badge-sm badge-outline gap-2">
               <div
-                className={`w-2 h-2 rounded-full ${getEmotionColor(emotion)}`}
+                className={`w-3 h-3 rounded-full ${getEmotionColor(emotion)}`}
                 role="img"
                 aria-label={`${emotion} color indicator`}
               />
@@ -77,7 +77,7 @@ const SpectralTimeline = ({ text, onSectionClick }) => {
       <div>
 
         {/* Timeline bars */}
-        <div className="space-y-1" role="group" aria-label="Emotional timeline sections">
+        <div className="space-y-2" role="group" aria-label="Emotional timeline sections">
             {emotionData.map((section) => {
               const dominantEmotion = getDominantEmotion(section.emotions);
               const isHovered = hoveredSection === section.index;

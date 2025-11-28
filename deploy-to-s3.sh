@@ -124,6 +124,29 @@ aws s3 cp dist/index.html "s3://$BUCKET_NAME/index.html" \
 echo -e "${GREEN}✅ Files uploaded${NC}"
 echo ""
 
+# Optional: Invalidate CloudFront cache if distribution ID is provided
+read -p "Do you have a CloudFront distribution? (y/n): " HAS_CLOUDFRONT
+if [ "$HAS_CLOUDFRONT" = "y" ]; then
+    read -p "Enter CloudFront Distribution ID: " DISTRIBUTION_ID
+    if [ ! -z "$DISTRIBUTION_ID" ]; then
+        echo ""
+        echo "🔄 Step 6: Invalidating CloudFront cache..."
+        INVALIDATION_OUTPUT=$(aws cloudfront create-invalidation \
+            --distribution-id "$DISTRIBUTION_ID" \
+            --paths "/*" 2>&1)
+        
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}✅ CloudFront cache invalidation started${NC}"
+            echo "   This will take 1-3 minutes to complete"
+        else
+            echo -e "${YELLOW}⚠️  CloudFront invalidation failed${NC}"
+            echo "   You may need to invalidate manually in AWS Console"
+        fi
+    fi
+fi
+
+echo ""
+
 # Get website URL
 WEBSITE_URL="http://$BUCKET_NAME.s3-website-$REGION.amazonaws.com"
 
@@ -134,11 +157,23 @@ echo ""
 echo "S3 Website URL (HTTP):"
 echo "  $WEBSITE_URL"
 echo ""
-echo "⚠️  Note: This is HTTP only. For HTTPS, create a CloudFront distribution."
+
+if [ ! -z "$DISTRIBUTION_ID" ]; then
+    CLOUDFRONT_URL=$(aws cloudfront get-distribution --id "$DISTRIBUTION_ID" --query 'Distribution.DomainName' --output text 2>/dev/null)
+    if [ ! -z "$CLOUDFRONT_URL" ]; then
+        echo "CloudFront URL (HTTPS):"
+        echo "  https://$CLOUDFRONT_URL"
+        echo ""
+    fi
+fi
+
+echo "⚠️  Note: If using CloudFront, always invalidate cache after deployment."
 echo ""
 echo "Next steps:"
-echo "  1. Test the S3 URL in your browser"
-echo "  2. Create CloudFront distribution for HTTPS"
-echo "  3. See AWS-DEPLOYMENT-GUIDE.md for CloudFront setup"
+echo "  1. Test your URL in a browser"
+if [ -z "$DISTRIBUTION_ID" ]; then
+    echo "  2. Create CloudFront distribution for HTTPS"
+    echo "  3. See AWS-DEPLOYMENT-GUIDE.md for CloudFront setup"
+fi
 echo ""
 echo "👻 The Haunted Reader is now deployed!"

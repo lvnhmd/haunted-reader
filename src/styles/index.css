@@ -2,6 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Accessibility: Screen reader only class */
+@layer utilities {
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .focus\:not-sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+}
+
+/* Accessibility: Enhanced focus indicators */
+@layer base {
+  *:focus-visible {
+    outline: 3px solid hsl(var(--p));
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
+
+  /* Better focus for buttons */
+  button:focus-visible,
+  a:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 3px solid hsl(var(--p));
+    outline-offset: 2px;
+  }
+
+  /* Focus for form inputs */
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 3px solid hsl(var(--p));
+    outline-offset: 0;
+  }
+}
+
 :root {
   font-synthesis: none;
   text-rendering: optimizeLegibility;

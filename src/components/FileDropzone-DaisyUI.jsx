@@ -45,7 +45,7 @@ const FileDropzone = ({ onFileSelect, onError, disabled = false }) => {
     <div
       {...getRootProps()}
       className={`
-        card bg-base-200 shadow-xl cursor-pointer
+        card bg-base-200 shadow-xl cursor-pointer min-h-[400px] flex items-center justify-center
         border-2 border-dashed transition-all duration-300
         ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
         ${isDragActive && !isDragReject ? 'border-warning bg-warning/10 scale-105' : 'border-base-300'}

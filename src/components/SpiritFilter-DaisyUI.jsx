@@ -23,7 +23,7 @@ const SpiritFilter = ({ selectedCategory, onCategoryChange, categories, disabled
 
   return (
     <div className="flex justify-center" role="group" aria-label="Filter spirits by category">
-      <div className="btn-group">
+      <div className="flex flex-wrap gap-2 justify-center">
         {allCategories.map((category) => {
           const isActive = selectedCategory === category;
           
