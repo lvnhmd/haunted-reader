@@ -80,7 +80,7 @@ const FileDropzone = ({ onFileSelect, onError, disabled = false }) => {
 
         {/* Supported formats */}
         <div className="badge badge-ghost">
-          TXT, PDF, or EPUB • Max 10MB
+           TXT, PDF, or EPUB &nbsp; <span aria-hidden="true">💀</span> &nbsp; Max 10MB
         </div>
       </div>
     </div>

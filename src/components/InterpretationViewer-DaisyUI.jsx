@@ -28,7 +28,7 @@ const InterpretationViewer = ({
         <div className="card-body">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h3 className="card-title text-3xl font-underdog">
+              <h3 className="card-title text-3xl font-display">
                 <span aria-hidden="true">👻</span> Spirit Interpretations
               </h3>
               <p className="text-base-content/70" role="status" aria-live="polite">
@@ -116,28 +116,46 @@ const InterpretationViewer = ({
         <div className="flex-1 min-w-0" role="tabpanel" aria-label={`${viewMode} view`}>
         {/* Original Text View */}
         {viewMode === 'original' && (
-          <article className="card bg-base-200 shadow-xl">
-            <div className="card-body">
-              <div className="flex items-center justify-between mb-4">
-                <h4 className="card-title"><span aria-hidden="true">📄</span> Original Text</h4>
-                {originalText && (
-                  <div className="badge badge-neutral" aria-label={`${originalText.split(/\s+/).length} words`}>
-                    {originalText.split(/\s+/).length} words
-                  </div>
-                )}
+          <article className="card bg-base-200 shadow-xl flex flex-col h-full">
+            {/* Header */}
+            <div className="px-4 py-3 border-b border-base-300">
+              <div className="flex items-center gap-3">
+                <span className="text-3xl" aria-hidden="true">📄</span>
+                <div className="flex-1 min-w-0">
+                  <h4 className="card-title text-lg mb-0">Original Text</h4>
+                  <p className="text-xs opacity-70">Unmodified source text</p>
+                </div>
               </div>
-              <div className="prose max-w-none">
-                {originalText ? (
-                  <div className="mockup-code max-h-[600px] overflow-y-auto" role="region" aria-label="Original text content">
-                    <pre className="text-sm"><code>{originalText}</code></pre>
-                  </div>
-                ) : (
-                  <div className="text-center py-12" role="status">
-                    <div className="text-6xl mb-4" aria-hidden="true">📄</div>
-                    <p className="text-base-content/70">No text uploaded yet</p>
-                  </div>
-                )}
+            </div>
+
+            {/* Metadata */}
+            {originalText && (
+              <div className="px-4 py-2 border-b border-base-300 flex flex-wrap gap-2 text-xs">
+                <div className="badge badge-ghost badge-xs gap-1">
+                  <span>📅</span>
+                  {new Date().toLocaleString()}
+                </div>
+                <div className="badge badge-ghost badge-xs gap-1">
+                  <span>📝</span>
+                  {originalText.split(/\s+/).length} words
+                </div>
               </div>
+            )}
+
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto p-4">
+              {originalText ? (
+                <div className="prose prose-sm max-w-none">
+                  <div className="whitespace-pre-wrap leading-relaxed font-book">
+                    {originalText}
+                  </div>
+                </div>
+              ) : (
+                <div className="text-center py-12" role="status">
+                  <div className="text-6xl mb-4" aria-hidden="true">📄</div>
+                  <p className="text-base-content/70">No text uploaded yet</p>
+                </div>
+              )}
             </div>
           </article>
         )}

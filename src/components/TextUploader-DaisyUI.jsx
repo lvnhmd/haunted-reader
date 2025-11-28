@@ -78,7 +78,7 @@ const TextUploader = ({ onTextParsed, onError }) => {
         <div className="card-body">
           {/* Header */}
           <div className="text-center mb-4">
-            <h3 className="card-title text-3xl font-underdog justify-center mb-2">
+            <h3 className="card-title text-3xl font-display justify-center mb-2">
               <span aria-hidden="true">📚</span> Summon Your Text
             </h3>
             <p className="text-base-content/70 text-sm">
@@ -93,7 +93,7 @@ const TextUploader = ({ onTextParsed, onError }) => {
                 role="tab"
                 aria-selected={activeTab === 'file'}
                 aria-controls="upload-content"
-                className={`tab ${activeTab === 'file' ? 'tab-active' : ''}`}
+                className={`tab gap-2 ${activeTab === 'file' ? 'tab-active' : ''}`}
                 onClick={() => !isProcessing && setActiveTab('file')}
                 disabled={isProcessing}
               >
@@ -103,7 +103,7 @@ const TextUploader = ({ onTextParsed, onError }) => {
                 role="tab"
                 aria-selected={activeTab === 'paste'}
                 aria-controls="upload-content"
-                className={`tab ${activeTab === 'paste' ? 'tab-active' : ''}`}
+                className={`tab gap-2 ${activeTab === 'paste' ? 'tab-active' : ''}`}
                 onClick={() => !isProcessing && setActiveTab('paste')}
                 disabled={isProcessing}
               >
@@ -148,12 +148,7 @@ const TextUploader = ({ onTextParsed, onError }) => {
             )}
           </div>
 
-          {/* Help text at bottom */}
-          <div className="text-center mt-4">
-            <p className="text-xs text-base-content/60">
-              <span aria-hidden="true">💀</span> Supports TXT, PDF, and EPUB files up to 10MB
-            </p>
-          </div>
+
         </div>
       </div>
 

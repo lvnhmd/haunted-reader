@@ -20,7 +20,7 @@ function AppContent() {
   const [activeView, setActiveView] = useState('upload');
   
   // Global state
-  const { parsedText, setParsedText } = useParsedText();
+  const { parsedText, setParsedText, clearParsedText } = useParsedText();
   const { selectedSpirits, setSelectedSpirits } = useSpirits();
   const { interpretations, loadingSpirits } = useInterpretations();
   const { error, clearError } = useError();
@@ -46,6 +46,12 @@ function AppContent() {
     if (selectedSpirits.length === 0) return;
     await generateMultiple(selectedSpirits);
     setActiveView('interpretations');
+  };
+
+  const handleReset = () => {
+    clearParsedText();
+    setActiveView('upload');
+    clearError();
   };
 
   const showSpirits = parsedText && activeView === 'spirits';
@@ -100,7 +106,20 @@ function AppContent() {
           )}
         </div>
         
-        <div className="flex-none">
+        <div className="flex-none gap-2">
+          {parsedText && (
+            <button 
+              className="btn btn-ghost btn-sm gap-2"
+              onClick={handleReset}
+              title="Start over with new text"
+              aria-label="Reset and start over"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+              <span className="hidden sm:inline">Home</span>
+            </button>
+          )}
           <div className="badge badge-ghost" role="text" aria-label="Kiroween 2025 hackathon entry">Kiroween 2025</div>
         </div>
       </header>
@@ -130,7 +149,7 @@ function AppContent() {
             {/* Left: Welcome Section */}
             <section className="flex-1 flex items-center justify-center" aria-labelledby="welcome-heading">
               <div className="text-center max-w-xl">
-                <h2 id="welcome-heading" className="text-5xl font-bold font-underdog mb-4"><span aria-hidden="true">👻</span> Welcome</h2>
+                <h2 id="welcome-heading" className="text-5xl font-bold font-display mb-4"><span aria-hidden="true">👻</span> Welcome</h2>
                 <p className="text-lg mb-8">
                   Upload your text and let the spirits interpret it through their unique perspectives
                 </p>
@@ -140,7 +159,7 @@ function AppContent() {
                       <div className="flex items-center gap-3">
                         <div className="text-3xl" aria-hidden="true">📄</div>
                         <div className="text-left">
-                          <h3 className="font-semibold">1. Upload Text</h3>
+                          <h3 className="font-semibold"><span className="font-display">1.</span> Upload Text</h3>
                           <p className="text-xs opacity-70">TXT, PDF, or EPUB</p>
                         </div>
                       </div>
@@ -151,7 +170,7 @@ function AppContent() {
                       <div className="flex items-center gap-3">
                         <div className="text-3xl" aria-hidden="true">👻</div>
                         <div className="text-left">
-                          <h3 className="font-semibold">2. Select Spirits</h3>
+                          <h3 className="font-semibold"><span className="font-display">2.</span> Select Spirits</h3>
                           <p className="text-xs opacity-70">Up to 5 spirits</p>
                         </div>
                       </div>
@@ -162,7 +181,7 @@ function AppContent() {
                       <div className="flex items-center gap-3">
                         <div className="text-3xl" aria-hidden="true">📖</div>
                         <div className="text-left">
-                          <h3 className="font-semibold">3. View & Export</h3>
+                          <h3 className="font-semibold"><span className="font-display">3.</span> View & Export</h3>
                           <p className="text-xs opacity-70">Multiple formats</p>
                         </div>
                       </div>
@@ -186,10 +205,10 @@ function AppContent() {
 
         {/* Upload View - After Text Parsed */}
         {activeView === 'upload' && parsedText && (
-          <div className="h-full flex items-center justify-center p-8">
-            <div className="w-full max-w-2xl">
+          <div className="h-full overflow-auto p-8">
+            <div className="w-full max-w-2xl mx-auto">
               {parsedText && (
-                <div className="card bg-base-200 shadow-xl mt-8" role="region" aria-label="Text upload summary">
+                <div className="card bg-base-200 shadow-xl" role="region" aria-label="Text upload summary">
                   <div className="card-body">
                     <h2 className="card-title text-success">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -197,6 +216,23 @@ function AppContent() {
                       </svg>
                       Text Loaded Successfully
                     </h2>
+                    
+                    {/* File Info - Inline Display */}
+                    {(parsedText.fileName || parsedText.fileSize) && (
+                      <div className="flex items-center gap-2 text-sm opacity-80 mt-2">
+                        <span className="text-xl" aria-hidden="true">📄</span>
+                        <span>
+                          {parsedText.fileName || 'Pasted text'}
+                          {parsedText.fileSize && parsedText.fileSize > 0 && (
+                            <span className="opacity-60 ml-2">
+                              {parsedText.fileSize >= 1024 * 1024 
+                                ? `${(parsedText.fileSize / (1024 * 1024)).toFixed(2)} MB`
+                                : `${(parsedText.fileSize / 1024).toFixed(2)} KB`}
+                            </span>
+                          )}
+                        </span>
+                      </div>
+                    )}
                     <div className="stats stats-vertical lg:stats-horizontal shadow" role="group" aria-label="Text statistics">
                       <div className="stat">
                         <div className="stat-title">Words</div>
@@ -215,7 +251,25 @@ function AppContent() {
                         <div className="stat-value" aria-label={`${parsedText.structure?.paragraphs?.length || 0} paragraphs`}>{parsedText.structure?.paragraphs?.length || 0}</div>
                       </div>
                     </div>
-                    <div className="card-actions justify-end">
+                    
+                    {/* Text Preview */}
+                    <div className="mt-6">
+                      <div className="collapse collapse-arrow bg-base-300">
+                        <input type="checkbox" defaultChecked /> 
+                        <div className="collapse-title font-semibold">
+                          📄 Text Preview
+                        </div>
+                        <div className="collapse-content"> 
+                          <div className="bg-base-100 border border-base-content/10 rounded-lg p-4 h-[400px] overflow-y-auto">
+                            <pre className="text-sm whitespace-pre-wrap font-book leading-relaxed">
+                              {parsedText.content}
+                            </pre>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="card-actions justify-end mt-4">
                       <button 
                         className="btn btn-primary"
                         onClick={() => setActiveView('spirits')}
@@ -232,15 +286,17 @@ function AppContent() {
 
         {/* Spirits View */}
         {showSpirits && (
-          <section className="h-full flex flex-col p-8" aria-labelledby="spirits-heading">
+          <section className="h-full flex flex-col p-4 md:p-8" aria-labelledby="spirits-heading">
             <h2 id="spirits-heading" className="sr-only">Select Spirits for Interpretation</h2>
             <div className="flex-1 overflow-auto">
-              <SpiritGallery
-                onSpiritSelect={handleSpiritSelect}
-                selectedSpirits={selectedSpirits}
-                multiSelect={true}
-                maxSelections={5}
-              />
+              <div className="max-w-7xl mx-auto">
+                <SpiritGallery
+                  onSpiritSelect={handleSpiritSelect}
+                  selectedSpirits={selectedSpirits}
+                  multiSelect={true}
+                  maxSelections={5}
+                />
+              </div>
             </div>
             
             {selectedSpirits.length > 0 && (

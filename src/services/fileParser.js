@@ -172,7 +172,8 @@ export async function parseFile(file) {
       structure,
       metadata,
       fileName: file.name,
-      fileType
+      fileType,
+      fileSize: file.size
     };
   } catch (error) {
     throw new Error(`The spirits couldn't read this file: ${error.message}`);

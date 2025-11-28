@@ -36,6 +36,12 @@ const EMOTION_KEYWORDS = {
     'mystery', 'strange', 'odd', 'curious', 'wonder', 'question', 'unknown',
     'secret', 'hidden', 'obscure', 'enigma', 'puzzle', 'riddle', 'cryptic',
     'mysterious', 'unexplained', 'bizarre', 'peculiar', 'unusual', 'weird'
+  ],
+  neutral: [
+    'total', 'amount', 'price', 'cost', 'number', 'date', 'time', 'receipt',
+    'transaction', 'payment', 'card', 'item', 'product', 'quantity', 'tax',
+    'subtotal', 'invoice', 'order', 'purchase', 'store', 'location', 'address',
+    'phone', 'email', 'account', 'reference', 'code', 'id', 'customer'
   ]
 };
 
@@ -98,7 +104,8 @@ function calculateEmotionScores(text) {
     joy: 0,
     tension: 0,
     sadness: 0,
-    mystery: 0
+    mystery: 0,
+    neutral: 0
   };
 
   // Count matches for each emotion
@@ -118,14 +125,15 @@ function calculateEmotionScores(text) {
   // Calculate total count
   const totalCount = Object.values(counts).reduce((sum, count) => sum + count, 0);
 
-  // If no emotion keywords found, return balanced scores
+  // If no emotion keywords found, return neutral-dominant scores
   if (totalCount === 0) {
     return {
-      fear: 0.2,
-      joy: 0.2,
-      tension: 0.2,
-      sadness: 0.2,
-      mystery: 0.2
+      fear: 0.1,
+      joy: 0.1,
+      tension: 0.1,
+      sadness: 0.1,
+      mystery: 0.1,
+      neutral: 0.5
     };
   }
 
@@ -178,10 +186,10 @@ export function analyzeTextEmotions(text) {
  * @returns {string} The emotion with the highest score
  */
 export function getDominantEmotion(emotions) {
-  // Preference order for tie-breaking (neutral/positive emotions first)
-  const preferenceOrder = ['joy', 'mystery', 'tension', 'sadness', 'fear'];
+  // Preference order for tie-breaking (neutral first for ambiguous content)
+  const preferenceOrder = ['neutral', 'mystery', 'joy', 'tension', 'sadness', 'fear'];
   
-  let maxEmotion = 'mystery';
+  let maxEmotion = 'neutral';
   let maxScore = 0;
 
   // Find the highest score
@@ -221,7 +229,8 @@ export function getEmotionColor(emotion) {
     joy: 'bg-primary',       // DaisyUI primary color for joy
     tension: 'bg-warning',   // DaisyUI warning color for tension
     sadness: 'bg-info',      // DaisyUI info color for sadness
-    mystery: 'bg-secondary'  // DaisyUI secondary color for mystery
+    mystery: 'bg-secondary', // DaisyUI secondary color for mystery
+    neutral: 'bg-base-300'   // DaisyUI neutral gray for neutral content
   };
 
   return colors[emotion] || 'bg-neutral';

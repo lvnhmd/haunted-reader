@@ -52,14 +52,15 @@ const ComparisonView = ({
       {hasExtraInterpretations && (
         <div className="card bg-base-200 shadow-xl">
           <div className="card-body">
-            <h3 className="card-title text-lg">
-              📊 Select up to {maxComparisons} interpretations to compare
-            </h3>
+            <label className="label">
+              <span className="label-text font-semibold">Select up to {maxComparisons} interpretations to compare:</span>
+            </label>
             <div className="flex flex-wrap gap-2">
               {interpretations.map((interpretation) => {
-                const isSelected = selectedForComparison.some(
-                  (i) => i.spiritId === interpretation.spiritId
-                );
+                const isSelected = selectedForComparison.length > 0 
+                  ? selectedForComparison.some((i) => i.spiritId === interpretation.spiritId)
+                  : displayedInterpretations.some((i) => i.spiritId === interpretation.spiritId);
+                
                 return (
                   <button
                     key={interpretation.spiritId}
@@ -111,20 +112,6 @@ const ComparisonView = ({
         </div>
       )}
 
-      {/* Comparison tips */}
-      {displayedInterpretations.length > 1 && (
-        <div className="card bg-base-300 shadow-xl">
-          <div className="card-body">
-            <h4 className="card-title text-sm">💡 Comparison Tips</h4>
-            <ul className="text-sm space-y-1 opacity-70">
-              <li>• Each panel scrolls independently</li>
-              <li>• Compare writing styles and perspectives side-by-side</li>
-              <li>• Export individual interpretations or all at once</li>
-              <li>• Regenerate any interpretation to get a fresh take</li>
-            </ul>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

@@ -60,7 +60,7 @@ const SpectralTimeline = ({ text, onSectionClick }) => {
         
         {/* Legend - Two columns with spacing */}
         <div className="grid grid-cols-2 gap-2 mb-4" role="group" aria-label="Emotion color legend">
-          {['fear', 'joy', 'tension', 'sadness', 'mystery'].map((emotion) => (
+          {['fear', 'joy', 'tension', 'sadness', 'mystery', 'neutral'].map((emotion) => (
             <div key={emotion} className="badge badge-sm badge-outline gap-2">
               <div
                 className={`w-3 h-3 rounded-full ${getEmotionColor(emotion)}`}

@@ -61,7 +61,7 @@ const SpiritGallery = ({
       {/* Header Card */}
       <div className="card bg-base-200 shadow-xl">
         <div className="card-body text-center">
-          <h2 className="card-title text-3xl font-underdog justify-center">
+          <h2 className="card-title text-3xl font-display justify-center">
             👻 Choose Your Spirits
           </h2>
           <p className="text-base-content/70">
@@ -98,7 +98,7 @@ const SpiritGallery = ({
 
       {/* Spirit Grid */}
       <div 
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
         role="group"
         aria-label="Available spirits"
       >

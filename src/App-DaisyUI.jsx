@@ -21,7 +21,7 @@ function AppContent() {
   const [activeView, setActiveView] = useState('upload');
   
   // Global state
-  const { parsedText, setParsedText } = useParsedText();
+  const { parsedText, setParsedText, clearParsedText } = useParsedText();
   const { selectedSpirits, setSelectedSpirits } = useSpirits();
   const { interpretations, loadingSpirits } = useInterpretations();
   const { error, clearError } = useError();
@@ -51,6 +51,13 @@ function AppContent() {
 
   const handleTimelineSectionClick = (sectionIndex) => {
     console.log('Timeline section clicked:', sectionIndex);
+  };
+
+  const handleReset = () => {
+    clearParsedText(); // This clears everything: text, spirits, interpretations
+    setActiveView('upload');
+    clearError();
+    toast.success('Ready for new text');
   };
 
   const showSpirits = parsedText && activeView === 'spirits';
@@ -125,7 +132,19 @@ function AppContent() {
           </div>
         )}
         
-        <div className="navbar-end">
+        <div className="navbar-end gap-2">
+          {parsedText && (
+            <button 
+              className="btn btn-ghost btn-sm gap-2"
+              onClick={handleReset}
+              title="Start over with new text"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+              <span className="hidden sm:inline">Home</span>
+            </button>
+          )}
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle">
               <div className="indicator">

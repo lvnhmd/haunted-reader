@@ -33,18 +33,15 @@ const TextInput = ({ onTextSubmit, disabled = false }) => {
       <form onSubmit={handleSubmit} className="space-y-4 flex-1 flex flex-col">
         {/* Textarea */}
         <div className="form-control flex-1">
-          <label htmlFor="text-input" className="label">
-            <span className="label-text">Paste your text here for spirit interpretation</span>
-          </label>
           <textarea
             id="text-input"
             value={text}
             onChange={(e) => setText(e.target.value)}
             onPaste={handlePaste}
             disabled={disabled}
-            placeholder="Paste your text here... The spirits are listening..."
+            placeholder="💀 Paste any text up to 50,000 characters"
             className="textarea textarea-bordered textarea-lg flex-1 resize-none"
-            aria-describedby="text-input-help"
+            aria-label="Paste your text here for spirit interpretation"
           />
         </div>
 
@@ -71,10 +68,6 @@ const TextInput = ({ onTextSubmit, disabled = false }) => {
         </div>
       </form>
 
-      {/* Help text */}
-      <p id="text-input-help" className="text-xs opacity-70 text-center">
-        <span aria-hidden="true">💀</span> Paste any text up to 50,000 characters
-      </p>
     </div>
   );
 };
