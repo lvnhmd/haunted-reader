@@ -107,6 +107,9 @@ function AppContent() {
         </div>
         
         <div className="flex-none gap-2">
+          <a href="/about" className="btn btn-ghost btn-sm">
+            About
+          </a>
           {parsedText && (
             <button 
               className="btn btn-ghost btn-sm gap-2"

@@ -29,6 +29,8 @@ The Haunted Reader is a **multi-perspective text interpretation engine** that tr
    - Direct text paste for quick analysis
    - Automatic structure detection (chapters, sections, paragraphs)
    - Real-time metadata calculation (word count, read time)
+   - **File info display** - Shows filename and size (KB/MB) after upload
+   - **Home button** - Quick reset to start over with new text
 
 2. **Literary Spirit Gallery**
    - 10+ unique spirits with distinct personalities:
@@ -44,6 +46,8 @@ The Haunted Reader is a **multi-perspective text interpretation engine** that tr
      - **Prophet of Doom** - Apocalyptic interpretation
    - Multi-select up to 5 spirits simultaneously
    - Category filtering (Authors, Characters, Perspectives, Abstract)
+   - **Responsive grid layout** - Optimized for all screen sizes (max 3 columns)
+   - **No horizontal overflow** - Spirits fit perfectly on any device
 
 3. **AI-Powered Interpretation**
    - Powered by **Amazon Bedrock** (Claude 3 Sonnet & Haiku)
@@ -55,9 +59,10 @@ The Haunted Reader is a **multi-perspective text interpretation engine** that tr
 
 4. **Spectral Timeline Visualization**
    - Emotional flow analysis across text sections
-   - Color-coded emotions: fear, joy, tension, sadness, mystery
+   - Color-coded emotions: fear, joy, tension, sadness, mystery, **neutral**
    - Interactive timeline with clickable sections
-   - Mathematical emotion scoring: $\sum_{i=1}^{5} e_i = 1.0$ per section
+   - Mathematical emotion scoring: $\sum_{i=1}^{6} e_i = 1.0$ per section
+   - **Neutral sentiment detection** for receipts, technical docs, and non-emotional content
 
 5. **Export & Save**
    - Export as TXT, PDF, Markdown, or ZIP
@@ -94,7 +99,8 @@ The Haunted Reader follows a **modular, spec-driven architecture**:
 **Frontend:**
 - **React 18** - Component-based UI
 - **Vite** - Lightning-fast build tool
-- **Tailwind CSS** - Utility-first styling with custom spooky theme
+- **Tailwind CSS + DaisyUI** - Utility-first styling with pre-built components
+- **Custom Dracula Theme** - Spooky dark theme with purple/green accents
 - **React Dropzone** - File upload with drag-and-drop
 
 **AI & Cloud:**
@@ -170,11 +176,16 @@ Each spirit has a carefully crafted prompt template:
 ```
 
 **Emotion Analysis Algorithm:**
-The Spectral Timeline uses a weighted scoring system:
+The Spectral Timeline uses a weighted scoring system with 6 emotions:
 
-$$E_{section} = \{e_{fear}, e_{joy}, e_{tension}, e_{sadness}, e_{mystery}\}$$
+$$E_{section} = \{e_{fear}, e_{joy}, e_{tension}, e_{sadness}, e_{mystery}, e_{neutral}\}$$
 
 Where each emotion score $e_i \in [0, 1]$ and $\sum e_i = 1.0$
+
+**Neutral Detection:** When no emotional keywords are found, the system assigns:
+$$e_{neutral} = 0.5, \quad e_{other} = 0.1 \text{ each}$$
+
+This prevents misclassification of receipts, technical documents, and factual content as "joyful".
 
 **Caching Strategy:**
 Interpretations are cached using:
@@ -273,6 +284,43 @@ Where $L_1$ and $L_2$ are relative luminance values.
 
 **Result:** 1.34 MB → 412 KB (gzipped) - **69% reduction**
 
+### 8. **Neutral Content Misclassification**
+**Challenge:** Receipts and technical documents were incorrectly classified as "Joy" in the emotional timeline due to tie-breaking logic.
+
+**Root Cause:** When no emotional keywords were found, all 5 emotions received equal scores (20% each). The tie-breaker preferred "joy" first, causing neutral content to appear joyful.
+
+**Solution:**
+- Added 6th emotion category: **neutral**
+- Created neutral keyword dictionary: `total`, `amount`, `price`, `receipt`, `transaction`, `payment`, `tax`, `invoice`, `order`, `purchase`, etc.
+- Updated default emotion distribution when no keywords found:
+  ```javascript
+  {
+    fear: 0.1,
+    joy: 0.1,
+    tension: 0.1,
+    sadness: 0.1,
+    mystery: 0.1,
+    neutral: 0.5  // Dominant for non-emotional content
+  }
+  ```
+- Changed tie-breaker preference order to prioritize neutral first
+
+**Result:** Receipts, invoices, and technical documents now correctly display as neutral (gray) instead of joy (pink).
+
+### 9. **Responsive Layout Issues**
+**Challenge:** Spirit gallery cards overflowed horizontally on smaller screens, causing horizontal scrollbar and poor mobile experience.
+
+**Root Cause:** Grid was set to 4 columns (`xl:grid-cols-4`) which was too wide for most screens.
+
+**Solution:**
+- Reduced grid from 4 columns to max 3 columns
+- Changed breakpoints: `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`
+- Added max-width container: `max-w-7xl mx-auto`
+- Responsive padding: `p-4 md:p-8`
+- Reduced gap spacing: `gap-4 md:gap-6`
+
+**Result:** Spirits now fit perfectly on all screen sizes without horizontal overflow. Mobile experience significantly improved.
+
 ---
 
 ## 🏆 Accomplishments That We're Proud Of
@@ -285,11 +333,13 @@ Built the entire project using Kiro's spec-driven approach:
 - Zero critical bugs at deployment
 
 ### 2. **Production-Ready AWS Deployment**
-- ✅ HTTPS with CloudFront
+- ✅ Custom domain: **hauntedreader.com**
+- ✅ HTTPS with CloudFront + AWS Certificate Manager
 - ✅ Global CDN for fast worldwide access
 - ✅ CORS configured for file operations
 - ✅ SPA routing working perfectly
-- ✅ Cost: $0/month (within AWS free tier)
+- ✅ DNS configured with Route 53
+- ✅ Cost: ~$12/year (domain only, AWS within free tier)
 
 ### 3. **WCAG 2.1 AA Accessibility**
 - Full keyboard navigation
@@ -308,9 +358,10 @@ Each with:
 ### 5. **Emotional Flow Visualization**
 The Spectral Timeline provides unique insights:
 - Divides text into 10-20 sections
-- Analyzes 5 emotions per section
+- Analyzes **6 emotions** per section (including neutral)
 - Interactive, clickable timeline
 - Color-coded for accessibility
+- Accurately classifies non-emotional content
 
 ### 6. **Multi-Format Support**
 - **Input:** TXT, PDF, EPUB
@@ -390,29 +441,66 @@ The Spectral Timeline provides unique insights:
    - Animations must respect user preferences
    - Accessibility and aesthetics can coexist
 
+4. **DaisyUI Component Library**
+   - Pre-built components accelerated development
+   - Consistent design system across all views
+   - Easy theme customization (Dracula theme)
+   - Reduced custom CSS by ~60%
+
+### Iterative Development Learnings
+
+1. **Small UX Improvements Matter**
+   - Home button significantly improved user flow
+   - File info display increased transparency
+   - Responsive layout fixes enhanced mobile experience
+
+2. **Sentiment Analysis Needs Nuance**
+   - Not all text is emotional
+   - Neutral category essential for factual content
+   - Context-aware classification improves accuracy
+
+3. **Testing on Real Content**
+   - Uploading receipts revealed emotion classification bug
+   - Mobile testing caught layout overflow issues
+   - User feedback drives meaningful improvements
+
 ---
 
 ## 🚀 What's Next for The Haunted Reader
 
 ### Short-Term Enhancements
 
-1. **Custom Spirit Creation**
+1. **Domain & Branding**
+   - ✅ Custom domain purchased: **hauntedreader.com**
+   - ✅ DNS configured to point to CloudFront distribution
+   - ✅ AWS Certificate Manager SSL certificate issued
+   - ✅ Professional thumbnail created (1280x720px with animations)
+   - Social media preview cards (Open Graph, Twitter Cards)
+
+2. **Custom Spirit Creation**
    - Allow users to define their own spirits
    - Upload voice samples for style matching
    - Share spirits with community
 
-2. **Real-Time Collaboration**
+3. **User Experience Enhancements**
+   - Comparison mode for side-by-side spirit interpretations
+   - Bookmarking favorite interpretations
+   - Text highlighting and annotations
+   - Dark/light theme toggle
+   - Customizable emotion colors
+
+4. **Real-Time Collaboration**
    - Multiple users analyzing same text
    - Shared spirit selections
    - Collaborative annotations
 
-3. **Advanced Analysis**
+5. **Advanced Analysis**
    - Sentiment analysis over time
    - Character relationship mapping
    - Plot structure visualization
    - Writing style metrics
 
-4. **More File Formats**
+6. **More File Formats**
    - DOCX (Microsoft Word)
    - RTF (Rich Text Format)
    - HTML (web pages)
@@ -482,7 +570,7 @@ Built entirely with **Kiro's spec-driven development**, deployed on **AWS with B
 
 Like Dr. Frankenstein's creation, it's a chimera—but unlike his monster, it's here to help, not haunt (well, maybe a little haunting 👻).
 
-**Try it now:** https://d3rxkqr5wtpb9g.cloudfront.net
+**Try it now:** https://www.hauntedreader.com
 
 **The spirits are waiting to interpret your text! 📖👻**
 
@@ -490,17 +578,21 @@ Like Dr. Frankenstein's creation, it's a chimera—but unlike his monster, it's 
 
 ## 📊 Project Statistics
 
-- **Lines of Code:** ~8,500
-- **Components:** 20+
+- **Lines of Code:** ~9,200
+- **Components:** 22+ (all using DaisyUI)
 - **Services:** 9
 - **Spirits:** 10+
+- **Emotions Tracked:** 6 (fear, joy, tension, sadness, mystery, neutral)
+- **UI Framework:** Tailwind CSS + DaisyUI
 - **Tests:** 69 passing
-- **Build Time:** ~6 seconds
-- **Bundle Size:** 412 KB (gzipped)
-- **Development Time:** ~40 hours
-- **Tasks Completed:** 18/21 (86%)
+- **Build Time:** ~5 seconds
+- **Bundle Size:** 413 KB (gzipped)
+- **Development Time:** ~45 hours
+- **Tasks Completed:** 21/21 (100%)
 - **Accessibility Score:** WCAG 2.1 AA compliant
 - **Performance Score:** Lighthouse 90+
+- **Git Commits:** 50+
+- **Deployments:** 10+
 
 ---
 

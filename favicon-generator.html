@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favicon Generator - The Haunted Reader</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #0a0a0a;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: white;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: #9d4edd;
+            margin-bottom: 30px;
+        }
+
+        .favicon-preview {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .size-box {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #9d4edd;
+        }
+
+        .size-label {
+            color: #06ffa5;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        canvas {
+            border: 1px solid #333;
+            display: block;
+            margin: 10px auto;
+            image-rendering: pixelated;
+        }
+
+        .instructions {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            text-align: left;
+            margin-top: 30px;
+            border: 2px solid #9d4edd;
+        }
+
+        .instructions h3 {
+            color: #06ffa5;
+            margin-top: 0;
+        }
+
+        .instructions ol {
+            line-height: 1.8;
+        }
+
+        .instructions code {
+            background: #0a0a0a;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #06ffa5;
+        }
+
+        button {
+            background: #9d4edd;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #7b2cbf;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>👻 The Haunted Reader - Favicon Generator</h1>
+        
+        <div class="favicon-preview">
+            <div class="size-box">
+                <div class="size-label">16x16 (Browser Tab)</div>
+                <canvas id="favicon16" width="16" height="16"></canvas>
+                <button onclick="downloadFavicon(16)">Download 16x16</button>
+            </div>
+            
+            <div class="size-box">
+                <div class="size-label">32x32 (Standard)</div>
+                <canvas id="favicon32" width="32" height="32"></canvas>
+                <button onclick="downloadFavicon(32)">Download 32x32</button>
+            </div>
+            
+            <div class="size-box">
+                <div class="size-label">48x48 (High DPI)</div>
+                <canvas id="favicon48" width="48" height="48"></canvas>
+                <button onclick="downloadFavicon(48)">Download 48x48</button>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>📋 How to Use</h3>
+            <ol>
+                <li>Click the download buttons above to save each size</li>
+                <li>Use an online tool to convert PNGs to .ico:
+                    <ul>
+                        <li><a href="https://www.favicon-generator.org/" target="_blank" style="color: #06ffa5;">favicon-generator.org</a></li>
+                        <li><a href="https://realfavicongenerator.net/" target="_blank" style="color: #06ffa5;">realfavicongenerator.net</a></li>
+                    </ul>
+                </li>
+                <li>Place <code>favicon.ico</code> in your <code>public/</code> folder</li>
+                <li>Update <code>index.html</code> to include:
+                    <pre style="background: #0a0a0a; padding: 10px; border-radius: 5px; overflow-x: auto;"><code>&lt;link rel="icon" type="image/x-icon" href="/favicon.ico"&gt;</code></pre>
+                </li>
+                <li>Rebuild and redeploy your app</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function drawFavicon(size) {
+            const canvas = document.getElementById(`favicon${size}`);
+            const ctx = canvas.getContext('2d');
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+            
+            // Draw gradient background
+            const gradient = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+            gradient.addColorStop(0, '#9d4edd');
+            gradient.addColorStop(1, '#5a189a');
+            
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size/2, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw ghost emoji
+            ctx.font = `${size * 0.7}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('👻', size/2, size/2);
+        }
+
+        function downloadFavicon(size) {
+            const canvas = document.getElementById(`favicon${size}`);
+            const link = document.createElement('a');
+            link.download = `favicon-${size}x${size}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Draw all sizes on load
+        window.onload = () => {
+            drawFavicon(16);
+            drawFavicon(32);
+            drawFavicon(48);
+        };
+    </script>
+</body>
+</html>

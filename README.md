@@ -34,7 +34,7 @@ This project stitches together:
 - Authentication: Amazon Cognito Identity Pool
 - Hosting: AWS S3 + CloudFront CDN
 - File Processing: PDF.js, EPUB parser
-- Styling: Tailwind CSS with spooky theme
+- Styling: Tailwind CSS + DaisyUI (Dracula theme)
 
 ## 🎭 Available Spirits
 
@@ -94,11 +94,13 @@ See `.kiro/specs/haunted-reader/AWS-DEPLOYMENT-GUIDE.md` for detailed deployment
 
 ## 🌐 Live Demo
 
-**Deployment Status:** ✅ Deployed to AWS with HTTPS  
-**CloudFront URL (HTTPS):** https://d3rxkqr5wtpb9g.cloudfront.net  
+**Deployment Status:** ✅ Live with Custom Domain  
+**🌐 Live URL:** https://www.hauntedreader.com  
+**CloudFront Distribution:** https://d3rxkqr5wtpb9g.cloudfront.net  
 **S3 Website URL (HTTP):** http://haunted-reader-kiroween-1764092634.s3-website-us-east-1.amazonaws.com
 
-✅ **Secure HTTPS access via CloudFront CDN**
+✅ **Custom domain with AWS Certificate Manager SSL**  
+✅ **Global CDN via CloudFront for fast worldwide access**
 
 See `.kiro/specs/haunted-reader/TASK-18-COMPLETION.md` for deployment details.
 
